@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Flowbite Flask App{% endblock %}</title>
+    <!-- Flowbite CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Tailwind CSS -->
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    {% endblock %}
+</head>
+<body>
+    <!-- Navigation Bar -->
+    {% block navbar %}
+    {% include 'partials/navbar.html' %}
+    {% endblock %}
+
+    <!-- Sidebar -->
+    {% block sidebar %}
+    {% include 'partials/sidebar.html' %}
+    {% endblock %}
+
+
+    <!-- Main Content -->
+    <main class="p-4 md:ml-64 h-auto pt-20">
+        {% block content %}
+        <!-- Default content can go here -->
+        {% endblock %}
+    </main>
+
+    <!-- Core Scripts - Load Flowbite first -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite-datepicker@1.3.2/dist/js/datepicker.min.js"></script>
+    <script>
+        // التحقق من تحميل Flowbite عن طريق الكائن Modal
+        if (typeof Modal === 'undefined') {
+            console.error('Flowbite is not loaded properly. Please check the script inclusion or network connection.');
+        } else {
+            console.log('Flowbite loaded successfully');
+        }
+    </script>
+    
+    <!-- Additional Scripts -->
+    {% block scripts %}
+    {% include 'partials/scripts.html' %}
+    {% endblock %}
+</body>
+</html>

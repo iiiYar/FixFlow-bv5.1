@@ -1,0 +1,231 @@
+<aside
+class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-all duration-300 ease-in-out -translate-x-full bg-white border-r border-gray-200 shadow-lg md:translate-x-0 dark:bg-gray-800 dark:border-gray-700 hover:shadow-xl"
+aria-label="Sidenav"
+id="drawer-navigation"
+>
+<div class="overflow-y-auto py-6 px-4 h-full bg-white dark:bg-gray-800">
+  <form action="#" method="GET" class="md:hidden mb-2">
+    <label for="sidebar-search" class="sr-only">Search</label>
+    <div class="relative">
+      <div
+        class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+      >
+        <svg
+          class="w-5 h-5 text-gray-500 dark:text-gray-400"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+          ></path>
+        </svg>
+      </div>
+      <input
+        type="text"
+        name="search"
+        id="sidebar-search"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+        placeholder="Search"
+      />
+    </div>
+  </form>
+  <ul class="space-y-3">
+    <!-- Dashboard Button -->
+    <li>
+      <a href="{{ url_for('main.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group active">
+          <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+              <i class="fas fa-home text-primary-600 dark:text-primary-300"></i>
+          </div>
+          <span class="ms-3 font-medium">Dashboard</span>
+      </a>
+    </li>
+    
+    <!-- Customers Button -->
+    <li>
+        <a href="{{ url_for('customer.customers') }}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+                <i class="fas fa-users text-green-500"></i>
+            </div>
+            <span class="ms-3 font-medium">Customers</span>
+        </a>
+    </li>
+    <!-- Sales Dropdown Menu -->
+    <li>
+      <button
+        type="button"
+        class="flex items-center p-2 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        aria-controls="dropdown-sales"
+        data-collapse-toggle="dropdown-sales"
+      >
+        <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+          <svg class="w-5 h-5 text-blue-500 dark:text-blue-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
+          </svg>
+        </div>
+        <span class="flex-1 ms-3 font-medium text-left">Sales</span>
+        <svg
+          class="w-3 h-3 transition-transform duration-300"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 10 6"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 4 4 4-4"
+          />
+        </svg>
+      </button>
+      <ul id="dropdown-sales" class="py-2 space-y-2 transition-all duration-300 ease-in-out transform origin-top">
+        <li>
+          <a
+            href="{{ url_for('repair.smartphone_repair') }}"
+            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            style="padding-left: 17px;"
+          >
+            <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+              <i class="ph ph-wrench text-orange-500 dark:text-orange-400 text-xl"></i>
+            </div>
+            <span class="ms-3 font-medium">Smartphone Repair</span>
+          </a>
+        </li>
+        <li>
+          <a
+            href="{{ url_for('main.second_hand_phones') }}"
+            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" 
+            style="padding-left: 17px;"
+          >
+
+          
+
+          
+            <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+              <i class="ph ph-devices text-purple-500 dark:text-purple-400 text-xl"></i>
+            </div>
+            <span class="ms-3 font-medium">Second hand Phone</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    
+    <!-- Filling forms section -->
+    <li>
+      <button
+        type="button"
+        class="flex items-center p-2 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        aria-controls="dropdown-filling-forms"
+        data-collapse-toggle="dropdown-filling-forms"
+      >
+        <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+          <svg class="w-5 h-5 text-teal-500 dark:text-teal-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5v2h6V5m-4 7c0-1.1.9-2 2-2 1.1 0 2 .9 2 2v3c0 1.1-.9 2-2 2-1.1 0-2-.9-2-2v-3Z"/>
+          </svg>
+        </div>
+        <span class="flex-1 ms-3 font-medium text-left">Filling forms</span>
+        <svg
+          class="w-3 h-3 transition-transform duration-300"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 10 6"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 4 4 4-4"
+          />
+        </svg>
+      </button>
+      <ul id="dropdown-filling-forms" class="hidden py-2 space-y-2 transition-all duration-300 ease-in-out transform origin-top">
+        <li>
+            <a href="{{ url_for('devices.list_devices') }}" class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+                <svg class="w-5 h-5 text-indigo-500 dark:text-indigo-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6h-2m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4"/>
+                </svg>
+              </div>
+              <span class="ms-3 font-medium">Devices</span>
+            </a>
+        </li>
+    </ul>
+  </li>
+  <ul
+    class="pt-6 mt-6 space-y-3 border-t border-gray-200 dark:border-gray-700"
+  >
+    <!-- Help Button -->
+    <li>
+      <a
+        href="#"
+        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+      >
+        <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+          <svg class="w-5 h-5 text-amber-500 dark:text-amber-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a9 9 0 0 0 9-9m-9 9a9 9 0 0 1-9-9m9 9v-3m0-13v3m11 0h-3m-16 0h3"/>
+          </svg>
+        </div>
+        <span class="ms-3 font-medium">Help</span>
+      </a>
+    </li>
+  </ul>
+</div>
+<!-- Bottom Settings Bar -->
+<div
+  class="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-white dark:bg-gray-800 z-20 border-t border-gray-200 dark:border-gray-700"
+>
+  <a
+    href="#"
+    class="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200"
+  >
+    <div class="w-8 h-8 flex items-center justify-center">
+      <svg
+        aria-hidden="true"
+        class="w-5 h-5 text-cyan-500 dark:text-cyan-400"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"
+        ></path>
+      </svg>
+    </div>
+  </a>
+  <a
+    href="#"
+    data-tooltip-target="tooltip-settings"
+    class="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer dark:text-gray-400 dark:hover:text-white hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200"
+  >
+    <div class="w-8 h-8 flex items-center justify-center">
+      <svg
+        aria-hidden="true"
+        class="w-5 h-5 text-pink-500 dark:text-pink-400"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+    </div>
+  </a>
+  <div
+    id="tooltip-settings"
+    role="tooltip"
+    class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip"
+  >
+    Settings page
+    <div class="tooltip-arrow" data-popper-arrow></div>
+  </div>
+</div>
+</aside>

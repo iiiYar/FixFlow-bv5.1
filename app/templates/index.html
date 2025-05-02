@@ -1,0 +1,1282 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="min-h-[70vh] bg-gray-50 dark:bg-gray-900 flex flex-col">
+  <div class="w-full px-4 py-6">
+    <!-- Dashboard Header -->
+    <h2 class="text-3xl font-extrabold mb-2 text-gray-800 dark:text-white tracking-tight">Dashboard</h2>
+    <p class="text-gray-500 dark:text-gray-300 mb-8">Welcome back, Michael! Here's what's happening today.</p>
+
+    <!-- Widgets Container -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+      <!-- Total Revenue Widget -->
+      <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-6 flex flex-col gap-4 items-start justify-between transition hover:shadow-xl">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center justify-center w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full">
+            <i class="fa-solid fa-coins text-blue-500 dark:text-blue-300 text-2xl"></i>
+          </div>
+          <div>
+            <div class="text-gray-500 dark:text-gray-400 text-xs font-medium mb-1">Total Revenue</div>
+            <div class="text-2xl font-bold text-gray-900 dark:text-white">$24,567.89</div>
+          </div>
+        </div>
+        <div class="flex items-center mt-2 text-green-500 dark:text-green-400 text-xs font-semibold">
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12l5 5L20 7"/>
+          </svg>
+          8.2% <span class="text-gray-400 dark:text-gray-300 font-normal ml-1">vs last month</span>
+        </div>
+      </div>
+
+      <!-- Completed Repairs Widget -->
+      <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-6 flex flex-col gap-4 items-start justify-between transition hover:shadow-xl">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center justify-center w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full">
+            <i class="fa-solid fa-screwdriver-wrench text-green-500 dark:text-green-300 text-2xl"></i>
+          </div>
+          <div>
+            <div class="text-gray-500 dark:text-gray-400 text-xs font-medium mb-1">Completed Repairs</div>
+            <div class="text-2xl font-bold text-gray-900 dark:text-white">187</div>
+          </div>
+        </div>
+        <div class="flex items-center mt-2 text-green-500 dark:text-green-400 text-xs font-semibold">
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12l5 5L20 7"/>
+          </svg>
+          12.5% <span class="text-gray-400 dark:text-gray-300 font-normal ml-1">vs last month</span>
+        </div>
+      </div>
+
+      <!-- Average Repair Cost Widget -->
+      <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-6 flex flex-col gap-4 items-start justify-between transition hover:shadow-xl">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center justify-center w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full">
+            <i class="fa-solid fa-location-dot text-purple-500 dark:text-purple-300 text-2xl"></i>
+          </div>
+          <div>
+            <div class="text-gray-500 dark:text-gray-400 text-xs font-medium mb-1">Average Repair Cost</div>
+            <div class="text-2xl font-bold text-gray-900 dark:text-white">$124.95</div>
+          </div>
+        </div>
+        <div class="flex items-center mt-2 text-red-500 dark:text-red-400 text-xs font-semibold">
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 12l-5-5-5 5"/>
+          </svg>
+          2.1% <span class="text-gray-400 dark:text-gray-300 font-normal ml-1">vs last month</span>
+        </div>
+      </div>
+
+      <!-- Active Customers Widget -->
+      <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-6 flex flex-col gap-4 items-start justify-between transition hover:shadow-xl">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center justify-center w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-full">
+            <i class="fa-solid fa-user text-orange-500 dark:text-orange-300 text-2xl"></i>
+          </div>
+          <div>
+            <div class="text-gray-500 dark:text-gray-400 text-xs font-medium mb-1">Active Customers</div>
+            <div class="text-2xl font-bold text-gray-900 dark:text-white">352</div>
+          </div>
+        </div>
+        <div class="flex items-center mt-2 text-green-500 dark:text-green-400 text-xs font-semibold">
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12l5 5L20 7"/>
+          </svg>
+          5.3% <span class="text-gray-400 dark:text-gray-300 font-normal ml-1">vs last month</span>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Main Chart and Statistics Section -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+      <!-- Main Chart Widget -->
+      <div class="lg:col-span-3 p-4 bg-white border border-gray-200 rounded-xl shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+        <!-- Header Section -->
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex-shrink-0">
+            <span class="text-xl font-bold leading-none text-gray-900 sm:text-2xl dark:text-white">$45,385</span>
+            <h3 class="text-base font-light text-gray-500 dark:text-gray-400">Sales this week</h3>
+          </div>
+          <div class="flex items-center justify-end flex-1 text-base font-medium text-green-500 dark:text-green-400">
+            12.5%
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Chart Container -->
+        <div id="main-chart" class="min-h-[435px]"></div>
+
+        <!-- Card Footer -->
+        <div class="flex items-center justify-between pt-3 mt-4 border-t border-gray-200 sm:pt-6 dark:border-gray-700">
+          <div>
+            <button class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 rounded-lg hover:text-gray-900 dark:text-gray-400 dark:hover:text-white" type="button" data-dropdown-toggle="weekly-sales-dropdown">
+              Last 7 days
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <!-- Dropdown Menu -->
+            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="weekly-sales-dropdown">
+              <div class="px-4 py-3" role="none">
+                <p class="text-sm font-medium text-gray-900 truncate dark:text-white" role="none">Sep 16, 2021 - Sep 22, 2021</p>
+              </div>
+              <ul class="py-1" role="none">
+                <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Yesterday</a></li>
+                <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Today</a></li>
+                <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Last 7 days</a></li>
+                <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Last 30 days</a></li>
+                <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Last 90 days</a></li>
+              </ul>
+              <div class="py-1" role="none">
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Custom...</a>
+              </div>
+            </div>
+          </div>
+          <div class="flex-shrink-0">
+            <a href="#" class="inline-flex items-center p-2 text-xs font-medium uppercase rounded-lg text-primary-700 sm:text-sm hover:bg-gray-100 dark:text-primary-500 dark:hover:bg-gray-700">
+              Sales Report
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics Widget -->
+      <div class="lg:col-span-1 p-4 bg-white border border-gray-200 rounded-xl shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+        <h3 class="flex items-center mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+          Statistics this month
+          <button data-popover-target="popover-description" data-popover-placement="bottom-end" type="button">
+            <svg class="w-4 h-4 ml-2 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">Show information</span>
+          </button>
+        </h3>
+        <div data-popover="" id="popover-description" role="tooltip" class="absolute z-10 invisible inline-block text-sm font-light text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400">
+          <div class="p-3 space-y-2">
+            <h3 class="font-semibold text-gray-900 dark:text-white">Statistics</h3>
+            <p>Statistics is a branch of applied mathematics that involves the collection, description, analysis, and inference of conclusions from quantitative data.</p>
+            <a href="#" class="flex items-center font-medium text-primary-600 dark:text-primary-500 dark:hover:text-primary-600 hover:text-primary-700">
+              Read more
+              <svg class="w-4 h-4 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </a>
+          </div>
+          <div data-popper-arrow=""></div>
+        </div>
+
+        <!-- Tabs for Small Screens -->
+        <div class="sm:hidden">
+          <label for="tabs" class="sr-only">Select tab</label>
+          <select id="tabs" class="bg-gray-50 border-0 border-b border-gray-200 text-gray-900 text-sm rounded-t-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+            <option>Statistics</option>
+            <option>Services</option>
+            <option>FAQ</option>
+          </select>
+        </div>
+
+        <!-- Tabs for Larger Screens -->
+        <ul class="hidden text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg sm:flex dark:divide-gray-600 dark:text-gray-400" id="fullWidthTab" data-tabs-toggle="#fullWidthTabContent" role="tablist">
+          <li class="w-full">
+            <button id="faq-tab" data-tabs-target="#faq" type="button" role="tab" aria-controls="faq" aria-selected="true" class="inline-block w-full p-4 rounded-tl-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 text-blue-600 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500">Top products</button>
+          </li>
+          <li class="w-full">
+            <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false" class="inline-block w-full p-4 rounded-tr-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300">Top Customers</button>
+          </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div id="fullWidthTabContent" class="border-t border-gray-200 dark:border-gray-600">
+          <!-- Top Products -->
+          <div class="pt-4" id="faq" role="tabpanel" aria-labelledby="faq-tab">
+            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+              <li class="py-3 sm:py-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center min-w-0">
+                    <img class="flex-shrink-0 w-10 h-10" src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png" alt="iPhone image">
+                    <div class="ml-3">
+                      <p class="font-medium text-gray-900 truncate dark:text-white">iPhone 14 Pro</p>
+                      <div class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <path clip-rule="evenodd" fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+                        </svg>
+                        2.5% <span class="ml-2 text-gray-500">vs last month</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">$445,467</div>
+                </div>
+              </li>
+              <li class="py-3 sm:py-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center min-w-0">
+                    <img class="flex-shrink-0 w-10 h-10" src="https://flowbite-admin-dashboard.vercel.app/images/products/imac.png" alt="iMac image">
+                    <div class="ml-3">
+                      <p class="font-medium text-gray-900 truncate dark:text-white">Apple iMac 27"</p>
+                      <div class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <path clip-rule="evenodd" fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+                        </svg>
+                        12.5% <span class="ml-2 text-gray-500">vs last month</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">$256,982</div>
+                </div>
+              </li>
+              <li class="py-3 sm:py-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center min-w-0">
+                    <img class="flex-shrink-0 w-10 h-10" src="https://flowbite-admin-dashboard.vercel.app/images/products/watch.png" alt="Watch image">
+                    <div class="ml-3">
+                      <p class="font-medium text-gray-900 truncate dark:text-white">Apple Watch SE</p>
+                      <div class="flex items-center justify-end flex-1 text-sm text-red-600 dark:text-red-500">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z"></path>
+                        </svg>
+                        1.35% <span class="ml-2 text-gray-500">vs last month</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">$201,869</div>
+                </div>
+              </li>
+              <li class="py-3 sm:py-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center min-w-0">
+                    <img class="flex-shrink-0 w-10 h-10" src="https://flowbite-admin-dashboard.vercel.app/images/products/ipad.png" alt="iPad image">
+                    <div class="ml-3">
+                      <p class="font-medium text-gray-900 truncate dark:text-white">Apple iPad Air</p>
+                      <div class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <path clip-rule="evenodd" fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+                        </svg>
+                        12.5% <span class="ml-2 text-gray-500">vs last month</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">$103,967</div>
+                </div>
+              </li>
+              <li class="py-3 sm:py-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center min-w-0">
+                    <img class="flex-shrink-0 w-10 h-10" src="https://flowbite-admin-dashboard.vercel.app/images/products/imac.png" alt="iMac image">
+                    <div class="ml-3">
+                      <p class="font-medium text-gray-900 truncate dark:text-white">Apple iMac 24"</p>
+                      <div class="flex items-center justify-end flex-1 text-sm text-red-600 dark:text-red-500">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z"></path>
+                        </svg>
+                        2% <span class="ml-2 text-gray-500">vs last month</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">$98,543</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Top Customers -->
+          <div class="hidden pt-4" id="about" role="tabpanel" aria-labelledby="about-tab">
+            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+              <li class="py-3 sm:py-4">
+                <div class="flex items-center space-x-4">
+                  <div class="flex-shrink-0">
+                    <img class="w-8 h-8 rounded-full" src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png" alt="Neil image">
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="font-medium text-gray-900 truncate dark:text-white">Neil Sims</p>
+                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">email@flowbite.com</p>
+                  </div>
+                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">$3320</div>
+                </div>
+              </li>
+              <li class="py-3 sm:py-4">
+                <div class="flex items-center space-x-4">
+                  <div class="flex-shrink-0">
+                    <img class="w-8 h-8 rounded-full" src="https://flowbite-admin-dashboard.vercel.app/images/users/bonnie-green.png" alt="Bonnie image">
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="font-medium text-gray-900 truncate dark:text-white">Bonnie Green</p>
+                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">email@flowbite.com</p>
+                  </div>
+                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">$2467</div>
+                </div>
+              </li>
+              <li class="py-3 sm:py-4">
+                <div class="flex items-center space-x-4">
+                  <div class="flex-shrink-0">
+                    <img class="w-8 h-8 rounded-full" src="https://flowbite-admin-dashboard.vercel.app/images/users/michael-gough.png" alt="Michael image">
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="font-medium text-gray-900 truncate dark:text-white">Michael Gough</p>
+                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">email@flowbite.com</p>
+                  </div>
+                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">$2235</div>
+                </div>
+              </li>
+              <li class="py-3 sm:py-4">
+                <div class="flex items-center space-x-4">
+                  <div class="flex-shrink-0">
+                    <img class="w-8 h-8 rounded-full" src="https://flowbite-admin-dashboard.vercel.app/images/users/thomas-lean.png" alt="Thomas image">
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="font-medium text-gray-900 truncate dark:text-white">Thomas Lean</p>
+                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">email@flowbite.com</p>
+                  </div>
+                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">$1842</div>
+                </div>
+              </li>
+              <li class="py-3 sm:py-4">
+                <div class="flex items-center space-x-4">
+                  <div class="flex-shrink-0">
+                    <img class="w-8 h-8 rounded-full" src="https://flowbite-admin-dashboard.vercel.app/images/users/lana-byrd.png" alt="Lana image">
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="font-medium text-gray-900 truncate dark:text-white">Lana Byrd</p>
+                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">email@flowbite.com</p>
+                  </div>
+                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">$1044</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card Footer -->
+        <div class="flex items-center justify-between pt-3 mt-5 border-t border-gray-200 sm:pt-6 dark:border-gray-700">
+          <div>
+            <button class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 rounded-lg hover:text-gray-900 dark:text-gray-400 dark:hover:text-white" type="button" data-dropdown-toggle="stats-dropdown">
+              Last 7 days
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <!-- Dropdown Menu -->
+            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="stats-dropdown">
+              <div class="px-4 py-3" role="none">
+                <p class="text-sm font-medium text-gray-900 truncate dark:text-white" role="none">Sep 16, 2021 - Sep 22, 2021</p>
+              </div>
+              <ul class="py-1" role="none">
+                <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Yesterday</a></li>
+                <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Today</a></li>
+                <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Last 7 days</a></li>
+                <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Last 30 days</a></li>
+                <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Last 90 days</a></li>
+              </ul>
+              <div class="py-1" role="none">
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Custom...</a>
+              </div>
+            </div>
+          </div>
+          <div class="flex-shrink-0">
+            <a href="#" class="inline-flex items-center p-2 text-xs font-medium uppercase rounded-lg text-primary-700 sm:text-sm hover:bg-gray-100 dark:text-primary-500 dark:hover:bg-gray-700">
+              Full Report
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+      <div class="lg:col-span-2 p-4 bg-white border border-gray-200 rounded-xl shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+        <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Recent Repairs</h3>
+                <button id="add-repair-btn" class="flex items-center text-sm text-white bg-primary hover:bg-primary/90 rounded-button px-4 py-2 whitespace-nowrap">
+                  <div class="w-4 h-4 flex items-center justify-center mr-1">
+                      <i class="ri-add-line"></i>
+                  </div>
+                  New Repair
+              </button>
+            </div>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-gray-50 dark:bg-gray-700 text-xs text-gray-700 dark:text-gray-300 uppercase">
+                    <tr>
+                        <th class="px-6 py-3 text-left">Customer</th>
+                        <th class="px-6 py-3 text-left">Device</th>
+                        <th class="px-6 py-3 text-left">Repair Type</th>
+                        <th class="px-6 py-3 text-right">Cost</th>
+                        <th class="px-6 py-3 text-center">Status</th>
+                        <th class="px-6 py-3 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <img src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20young%20woman%20with%20dark%20hair%2C%20business%20casual%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait&amp;width=100&amp;height=100&amp;seq=7&amp;orientation=squarish" class="w-8 h-8 rounded-full object-cover object-top" alt="Customer">
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">Sophia Williams</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Apr 22, 2025</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 flex items-center justify-center text-blue-500 mr-2">
+                                    <i class="ri-smartphone-line"></i>
+                                </div>
+                                <span class="text-sm text-gray-900 dark:text-white">iPhone 14 Pro</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">Screen Replacement</td>
+                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-white text-right">$249.99</td>
+                        <td class="px-6 py-4">
+                            <span class="status-badge bg-yellow-100 text-yellow-800">In Progress</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center justify-center space-x-2">
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <i class="ri-eye-line"></i>
+                                </button>
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <i class="ri-edit-line"></i>
+                                </button>
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-red-500 rounded-full hover:bg-gray-100">
+                                    <i class="ri-delete-bin-line"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <img src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20middle-aged%20man%20with%20short%20brown%20hair%2C%20business%20casual%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait&amp;width=100&amp;height=100&amp;seq=8&amp;orientation=squarish" class="w-8 h-8 rounded-full object-cover object-top" alt="Customer">
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">James Thompson</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Apr 21, 2025</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 flex items-center justify-center text-purple-500 mr-2">
+                                    <i class="ri-macbook-line"></i>
+                                </div>
+                                <span class="text-sm text-gray-900 dark:text-white">MacBook Air M2</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">Keyboard Replacement</td>
+                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-white text-right">$189.99</td>
+                        <td class="px-6 py-4">
+                            <span class="status-badge bg-green-100 text-green-800">Completed</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center justify-center space-x-2">
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <i class="ri-eye-line"></i>
+                                </button>
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <i class="ri-edit-line"></i>
+                                </button>
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-red-500 rounded-full hover:bg-gray-100">
+                                    <i class="ri-delete-bin-line"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <img src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20young%20man%20with%20glasses%2C%20business%20casual%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait&amp;width=100&amp;height=100&amp;seq=9&amp;orientation=squarish" class="w-8 h-8 rounded-full object-cover object-top" alt="Customer">
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">Michael Chen</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Apr 20, 2025</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 flex items-center justify-center text-green-500 mr-2">
+                                    <i class="ri-smartphone-line"></i>
+                                </div>
+                                <span class="text-sm text-gray-900 dark:text-white">Samsung Galaxy S23</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">Battery Replacement</td>
+                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-white text-right">$89.99</td>
+                        <td class="px-6 py-4">
+                            <span class="status-badge bg-green-100 text-green-800">Completed</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center justify-center space-x-2">
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <i class="ri-eye-line"></i>
+                                </button>
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <i class="ri-edit-line"></i>
+                                </button>
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-red-500 rounded-full hover:bg-gray-100">
+                                    <i class="ri-delete-bin-line"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <img src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20middle-aged%20woman%20with%20red%20hair%2C%20business%20casual%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait&amp;width=100&amp;height=100&amp;seq=10&amp;orientation=squarish" class="w-8 h-8 rounded-full object-cover object-top" alt="Customer">
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">Rebecca Johnson</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Apr 19, 2025</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 flex items-center justify-center text-indigo-500 mr-2">
+                                    <i class="ri-tablet-line"></i>
+                                </div>
+                                <span class="text-sm text-gray-900 dark:text-white">iPad Pro 12.9"</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">Screen Replacement</td>
+                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-white text-right">$329.99</td>
+                        <td class="px-6 py-4">
+                            <span class="status-badge bg-red-100 text-red-800">Pending</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center justify-center space-x-2">
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <i class="ri-eye-line"></i>
+                                </button>
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <i class="ri-edit-line"></i>
+                                </button>
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-red-500 rounded-full hover:bg-gray-100">
+                                    <i class="ri-delete-bin-line"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <img src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20an%20older%20man%20with%20white%20hair%2C%20business%20casual%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait&amp;width=100&amp;height=100&amp;seq=11&amp;orientation=squarish" class="w-8 h-8 rounded-full object-cover object-top" alt="Customer">
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">William Davis</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Apr 18, 2025</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <div class="w-5 h-5 flex items-center justify-center text-blue-500 mr-2">
+                                    <i class="ri-smartphone-line"></i>
+                                </div>
+                                <span class="text-sm text-gray-900 dark:text-white">iPhone 13</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">Water Damage Repair</td>
+                        <td class="px-6 py-4 text-sm text-gray-900 dark:text-white text-right">$199.99</td>
+                        <td class="px-6 py-4">
+                            <span class="status-badge bg-blue-100 text-blue-800">Diagnosed</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center justify-center space-x-2">
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <i class="ri-eye-line"></i>
+                                </button>
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <i class="ri-edit-line"></i>
+                                </button>
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-red-500 rounded-full hover:bg-gray-100">
+                                    <i class="ri-delete-bin-line"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="p-4 border-t">
+            <div class="flex items-center justify-between">
+                <div class="text-sm text-gray-600">
+                    Showing 5 of 42 repairs
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button class="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-primary rounded-full hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed" disabled="">
+                        <i class="ri-arrow-left-s-line ri-lg"></i>
+                    </button>
+                    <button class="w-9 h-9 flex items-center justify-center text-white bg-primary rounded-full">1</button>
+                    <button class="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-primary rounded-full hover:bg-gray-100">2</button>
+                    <button class="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-primary rounded-full hover:bg-gray-100">3</button>
+                    <button class="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-primary rounded-full hover:bg-gray-100">4</button>
+                    <button class="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-primary rounded-full hover:bg-gray-100">
+                        <i class="ri-arrow-right-s-line ri-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="lg:col-span-2 p-4 bg-white border border-gray-200 rounded-xl shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+      <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+          <div class="flex items-center justify-between">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Recent Repairs</h3>
+              <button id="add-repair-btn" class="flex items-center text-sm text-white bg-primary hover:bg-primary/90 rounded-button px-4 py-2 whitespace-nowrap">
+                <div class="w-4 h-4 flex items-center justify-center mr-1">
+                    <i class="ri-add-line"></i>
+                </div>
+                New Repair
+            </button>
+          </div>
+      </div>
+      <div class="overflow-x-auto">
+          <table class="w-full">
+              <thead class="bg-gray-50 dark:bg-gray-700 text-xs text-gray-700 dark:text-gray-300 uppercase">
+                  <tr>
+                      <th class="px-6 py-3 text-left">Customer</th>
+                      <th class="px-6 py-3 text-left">Device</th>
+                      <th class="px-6 py-3 text-left">Repair Type</th>
+                      <th class="px-6 py-3 text-right">Cost</th>
+                      <th class="px-6 py-3 text-center">Status</th>
+                      <th class="px-6 py-3 text-center">Actions</th>
+                  </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                  <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                      <td class="px-6 py-4">
+                          <div class="flex items-center">
+                              <img src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20young%20woman%20with%20dark%20hair%2C%20business%20casual%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait&amp;width=100&amp;height=100&amp;seq=7&amp;orientation=squarish" class="w-8 h-8 rounded-full object-cover object-top" alt="Customer">
+                              <div class="ml-3">
+                                  <p class="text-sm font-medium text-gray-900 dark:text-white">Sophia Williams</p>
+                                  <p class="text-xs text-gray-500 dark:text-gray-400">Apr 22, 2025</p>
+                              </div>
+                          </div>
+                      </td>
+                      <td class="px-6 py-4">
+                          <div class="flex items-center">
+                              <div class="w-5 h-5 flex items-center justify-center text-blue-500 mr-2">
+                                  <i class="ri-smartphone-line"></i>
+                              </div>
+                              <span class="text-sm text-gray-900 dark:text-white">iPhone 14 Pro</span>
+                          </div>
+                      </td>
+                      <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">Screen Replacement</td>
+                      <td class="px-6 py-4 text-sm text-gray-900 dark:text-white text-right">$249.99</td>
+                      <td class="px-6 py-4">
+                          <span class="status-badge bg-yellow-100 text-yellow-800">In Progress</span>
+                      </td>
+                      <td class="px-6 py-4">
+                          <div class="flex items-center justify-center space-x-2">
+                              <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                  <i class="ri-eye-line"></i>
+                              </button>
+                              <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                  <i class="ri-edit-line"></i>
+                              </button>
+                              <button class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-red-500 rounded-full hover:bg-gray-100">
+                                  <i class="ri-delete-bin-line"></i>
+                              </button>
+                          </div>
+                      </td>
+                  </tr>
+                  <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                      <td class="px-6 py-4">
+                          <div class="flex items-center">
+                              <img src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20middle-aged%20man%20with%20short%20brown%20hair%2C%20business%20casual%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait&amp;width=100&amp;height=100&amp;seq=8&amp;orientation=squarish" class="w-8 h-8 rounded-full object-cover object-top" alt="Customer">
+                              <div class="ml-3">
+                                  <p class="text-sm font-medium text-gray-900 dark:text-white">James Thompson</p>
+                                  <p class="text-xs text-gray-500 dark:text-gray-400">Apr 21, 2025</p>
+                              </div>
+                          </div>
+                      </td>
+                      <td class="px-6 py-4">
+                          <div class="flex items-center">
+                              <div class="w-5 h-5 flex items-center justify-center text-purple-500 mr-2">
+                                  <i class="ri-macbook-line"></i>
+                              </div>
+                              <span class="text-sm text-gray-900 dark:text-white">MacBook Air M2</span>
+                          </div>
+                      </td>
+                      <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">Keyboard Replacement</td>
+                      <td class="px-6 py-4 text-sm text-gray-900 dark:text-white text-right">$189.99</td>
+                      <td class="px-6 py-4">
+                          <span class="status-badge bg-green-100 text-green-800">Completed</span>
+                      </td>
+                      <td class="px-6 py-4">
+                          <div class="flex items-center justify-center space-x-2">
+                              <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                  <i class="ri-eye-line"></i>
+                              </button>
+                              <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                  <i class="ri-edit-line"></i>
+                              </button>
+                              <button class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-red-500 rounded-full hover:bg-gray-100">
+                                  <i class="ri-delete-bin-line"></i>
+                              </button>
+                          </div>
+                      </td>
+                  </tr>
+                  <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                      <td class="px-6 py-4">
+                          <div class="flex items-center">
+                              <img src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20young%20man%20with%20glasses%2C%20business%20casual%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait&amp;width=100&amp;height=100&amp;seq=9&amp;orientation=squarish" class="w-8 h-8 rounded-full object-cover object-top" alt="Customer">
+                              <div class="ml-3">
+                                  <p class="text-sm font-medium text-gray-900 dark:text-white">Michael Chen</p>
+                                  <p class="text-xs text-gray-500 dark:text-gray-400">Apr 20, 2025</p>
+                              </div>
+                          </div>
+                      </td>
+                      <td class="px-6 py-4">
+                          <div class="flex items-center">
+                              <div class="w-5 h-5 flex items-center justify-center text-green-500 mr-2">
+                                  <i class="ri-smartphone-line"></i>
+                              </div>
+                              <span class="text-sm text-gray-900 dark:text-white">Samsung Galaxy S23</span>
+                          </div>
+                      </td>
+                      <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">Battery Replacement</td>
+                      <td class="px-6 py-4 text-sm text-gray-900 dark:text-white text-right">$89.99</td>
+                      <td class="px-6 py-4">
+                          <span class="status-badge bg-green-100 text-green-800">Completed</span>
+                      </td>
+                      <td class="px-6 py-4">
+                          <div class="flex items-center justify-center space-x-2">
+                              <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                  <i class="ri-eye-line"></i>
+                              </button>
+                              <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                  <i class="ri-edit-line"></i>
+                              </button>
+                              <button class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-red-500 rounded-full hover:bg-gray-100">
+                                  <i class="ri-delete-bin-line"></i>
+                              </button>
+                          </div>
+                      </td>
+                  </tr>
+                  <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                      <td class="px-6 py-4">
+                          <div class="flex items-center">
+                              <img src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20middle-aged%20woman%20with%20red%20hair%2C%20business%20casual%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait&amp;width=100&amp;height=100&amp;seq=10&amp;orientation=squarish" class="w-8 h-8 rounded-full object-cover object-top" alt="Customer">
+                              <div class="ml-3">
+                                  <p class="text-sm font-medium text-gray-900 dark:text-white">Rebecca Johnson</p>
+                                  <p class="text-xs text-gray-500 dark:text-gray-400">Apr 19, 2025</p>
+                              </div>
+                          </div>
+                      </td>
+                      <td class="px-6 py-4">
+                          <div class="flex items-center">
+                              <div class="w-5 h-5 flex items-center justify-center text-indigo-500 mr-2">
+                                  <i class="ri-tablet-line"></i>
+                              </div>
+                              <span class="text-sm text-gray-900 dark:text-white">iPad Pro 12.9"</span>
+                          </div>
+                      </td>
+                      <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">Screen Replacement</td>
+                      <td class="px-6 py-4 text-sm text-gray-900 dark:text-white text-right">$329.99</td>
+                      <td class="px-6 py-4">
+                          <span class="status-badge bg-red-100 text-red-800">Pending</span>
+                      </td>
+                      <td class="px-6 py-4">
+                          <div class="flex items-center justify-center space-x-2">
+                              <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                  <i class="ri-eye-line"></i>
+                              </button>
+                              <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                  <i class="ri-edit-line"></i>
+                              </button>
+                              <button class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-red-500 rounded-full hover:bg-gray-100">
+                                  <i class="ri-delete-bin-line"></i>
+                              </button>
+                          </div>
+                      </td>
+                  </tr>
+                  <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                      <td class="px-6 py-4">
+                          <div class="flex items-center">
+                              <img src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20an%20older%20man%20with%20white%20hair%2C%20business%20casual%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait&amp;width=100&amp;height=100&amp;seq=11&amp;orientation=squarish" class="w-8 h-8 rounded-full object-cover object-top" alt="Customer">
+                              <div class="ml-3">
+                                  <p class="text-sm font-medium text-gray-900 dark:text-white">William Davis</p>
+                                  <p class="text-xs text-gray-500 dark:text-gray-400">Apr 18, 2025</p>
+                              </div>
+                          </div>
+                      </td>
+                      <td class="px-6 py-4">
+                          <div class="flex items-center">
+                              <div class="w-5 h-5 flex items-center justify-center text-blue-500 mr-2">
+                                  <i class="ri-smartphone-line"></i>
+                              </div>
+                              <span class="text-sm text-gray-900 dark:text-white">iPhone 13</span>
+                          </div>
+                      </td>
+                      <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">Water Damage Repair</td>
+                      <td class="px-6 py-4 text-sm text-gray-900 dark:text-white text-right">$199.99</td>
+                      <td class="px-6 py-4">
+                          <span class="status-badge bg-blue-100 text-blue-800">Diagnosed</span>
+                      </td>
+                      <td class="px-6 py-4">
+                          <div class="flex items-center justify-center space-x-2">
+                              <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                  <i class="ri-eye-line"></i>
+                              </button>
+                              <button class="w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                  <i class="ri-edit-line"></i>
+                              </button>
+                              <button class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-red-500 rounded-full hover:bg-gray-100">
+                                  <i class="ri-delete-bin-line"></i>
+                              </button>
+                          </div>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+      <div class="p-4 border-t">
+          <div class="flex items-center justify-between">
+              <div class="text-sm text-gray-600">
+                  Showing 5 of 42 repairs
+              </div>
+              <div class="flex items-center space-x-2">
+                  <button class="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-primary rounded-full hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed" disabled="">
+                      <i class="ri-arrow-left-s-line ri-lg"></i>
+                  </button>
+                  <button class="w-9 h-9 flex items-center justify-center text-white bg-primary rounded-full">1</button>
+                  <button class="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-primary rounded-full hover:bg-gray-100">2</button>
+                  <button class="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-primary rounded-full hover:bg-gray-100">3</button>
+                  <button class="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-primary rounded-full hover:bg-gray-100">4</button>
+                  <button class="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-primary rounded-full hover:bg-gray-100">
+                      <i class="ri-arrow-right-s-line ri-lg"></i>
+                  </button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>  
+
+<!-- Kanban Board -->
+<div class="mb-6">
+  <div class="flex justify-between items-center mb-6">
+    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Project Tasks</h3>
+    <button class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg transition-all duration-300 flex items-center">
+      <svg class="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 10 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
+      </svg>
+      Add Task
+    </button>
+  </div>
+
+  <!-- Kanban Columns -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- To Do Column -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div class="p-4 bg-gray-100 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+        <div class="flex items-center justify-between">
+          <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200">To Do</h4>
+          <span class="px-2.5 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 bg-gray-200 dark:bg-gray-600 rounded-full">4</span>
+        </div>
+      </div>
+      <div class="p-4 space-y-4 max-h-[600px] overflow-y-auto kanban-column">
+        <!-- Task Card 1 -->
+        <div class="task-card p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex justify-between items-start mb-3">
+            <span class="px-2.5 py-1 text-xs font-medium text-red-700 dark:text-red-400 bg-red-100 dark:bg-red-900/30 rounded-full">High</span>
+            <div class="flex space-x-1">
+              <button class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                </svg>
+              </button>
+              <button class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <h5 class="font-medium text-gray-900 dark:text-white mb-2">Update user authentication system</h5>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Implement new security protocols and update the login flow</p>
+          <div class="flex justify-between items-center">
+            <div class="flex -space-x-2">
+              <img class="w-7 h-7 rounded-full border-2 border-white dark:border-gray-800" src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png" alt="User">
+              <img class="w-7 h-7 rounded-full border-2 border-white dark:border-gray-800" src="https://flowbite-admin-dashboard.vercel.app/images/users/bonnie-green.png" alt="User">
+            </div>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Apr 25</span>
+          </div>
+        </div>
+        <!-- Task Card 2 -->
+        <div class="task-card p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex justify-between items-start mb-3">
+            <span class="px-2.5 py-1 text-xs font-medium text-yellow-700 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/30 rounded-full">Medium</span>
+            <div class="flex space-x-1">
+              <button class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                </svg>
+              </button>
+              <button class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <h5 class="font-medium text-gray-900 dark:text-white mb-2">Design new product page</h5>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Create wireframes and mockups for the new product listing page</p>
+          <div class="flex justify-between items-center">
+            <div class="flex -space-x-2">
+              <img class="w-7 h-7 rounded-full border-2 border-white dark:border-gray-800" src="https://flowbite-admin-dashboard.vercel.app/images/users/jese-leos.png" alt="User">
+            </div>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Apr 27</span>
+          </div>
+        </div>
+        <!-- Task Card 3 -->
+        <div class="task-card p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex justify-between items-start mb-3">
+            <span class="px-2.5 py-1 text-xs font-medium text-blue-700 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30 rounded-full">Low</span>
+            <div class="flex space-x-1">
+              <button class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                </svg>
+              </button>
+              <button class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <h5 class="font-medium text-gray-900 dark:text-white mb-2">Update documentation</h5>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Review and update API documentation for developers</p>
+          <div class="flex justify-between items-center">
+            <div class="flex -space-x-2">
+              <img class="w-7 h-7 rounded-full border-2 border-white dark:border-gray-800" src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20middle-aged%20business%20man%20with%20glasses%2C%20wearing%20a%20business%20suit%2C%20neutral%20expression%2C%20high%20quality%20professional%20photo&width=100&height=100&seq=10&orientation=squarish" alt="User">
+            </div>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Apr 30</span>
+          </div>
+        </div>
+        <!-- Task Card 4 -->
+        <div class="task-card p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex justify-between items-start mb-3">
+            <span class="px-2.5 py-1 text-xs font-medium text-yellow-700 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/30 rounded-full">Medium</span>
+            <div class="flex space-x-1">
+              <button class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                </svg>
+              </button>
+              <button class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <h5 class="font-medium text-gray-900 dark:text-white mb-2">Prepare quarterly report</h5>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Gather data and create presentation for stakeholders</p>
+          <div class="flex justify-between items-center">
+            <div class="flex -space-x-2">
+              <img class="w-7 h-7 rounded-full border-2 border-white dark:border-gray-800" src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20young%20woman%20with%20blonde%20hair%2C%20wearing%20business%20attire%2C%20neutral%20expression%2C%20high%20quality%20professional%20photo&width=100&height=100&seq=11&orientation=squarish" alt="User">
+              <img class="w-7 h-7 rounded-full border-2 border-white dark:border-gray-800" src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20middle-aged%20black%20man%20with%20short%20hair%2C%20wearing%20a%20business%20suit%2C%20neutral%20expression%2C%20high%20quality%20professional%20photo&width=100&height=100&seq=12&orientation=squarish" alt="User">
+            </div>
+            <span class="text-xs text-gray-500 dark:text-gray-400">May 2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- In Progress Column -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div class="p-4 bg-gray-100 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+        <div class="flex items-center justify-between">
+          <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200">In Progress</h4>
+          <span class="px-2.5 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 bg-gray-200 dark:bg-gray-600 rounded-full">3</span>
+        </div>
+      </div>
+      <div class="p-4 space-y-4 max-h-[600px] overflow-y-auto kanban-column">
+        <!-- Task Card 1 -->
+        <div class="task-card p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex justify-between items-start mb-3">
+            <span class="px-2.5 py-1 text-xs font-medium text-red-700 dark:text-red-400 bg-red-100 dark:bg-red-900/30 rounded-full">High</span>
+            <div class="flex space-x-1">
+              <button class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                </svg>
+              </button>
+              <button class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <h5 class="font-medium text-gray-900 dark:text-white mb-2">Fix payment gateway issues</h5>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Resolve transaction failures and optimize checkout process</p>
+          <div class="mb-3">
+            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div class="bg-blue-600 dark:bg-blue-500 h-2 rounded-full" style="width: 65%"></div>
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 text-right">65%</div>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex -space-x-2">
+              <img class="w-7 h-7 rounded-full border-2 border-white dark:border-gray-800" src="https://flowbite-admin-dashboard.vercel.app/images/users/thomas-lean.png" alt="User">
+              <img class="w-7 h-7 rounded-full border-2 border-white dark:border-gray-800" src="https://flowbite-admin-dashboard.vercel.app/images/users/michael-gough.png" alt="User">
+            </div>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Apr 24</span>
+          </div>
+        </div>
+        <!-- Task Card 2 -->
+        <div class="task-card p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex justify-between items-start mb-3">
+            <span class="px-2.5 py-1 text-xs font-medium text-yellow-700 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/30 rounded-full">Medium</span>
+            <div class="flex space-x-1">
+              <button class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                </svg>
+              </button>
+              <button class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <h5 class="font-medium text-gray-900 dark:text-white mb-2">Implement analytics dashboard</h5>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Create data visualization components for the admin panel</p>
+          <div class="mb-3">
+            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div class="bg-blue-600 dark:bg-blue-500 h-2 rounded-full" style="width: 40%"></div>
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 text-right">40%</div>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex -space-x-2">
+              <img class="w-7 h-7 rounded-full border-2 border-white dark:border-gray-800" src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20young%20asian%20woman%20with%20black%20hair%2C%20wearing%20business%20attire%2C%20neutral%20expression%2C%20high%20quality%20professional%20photo&width=100&height=100&seq=15&orientation=squarish" alt="User">
+            </div>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Apr 26</span>
+          </div>
+        </div>
+        <!-- Task Card 3 -->
+        <div class="task-card p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex justify-between items-start mb-3">
+            <span class="px-2.5 py-1 text-xs font-medium text-red-700 dark:text-red-400 bg-red-100 dark:bg-red-900/30 rounded-full">High</span>
+            <div class="flex space-x-1">
+              <button class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                </svg>
+              </button>
+              <button class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <h5 class="font-medium text-gray-900 dark:text-white mb-2">Optimize database queries</h5>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Improve performance of slow database operations</p>
+          <div class="mb-3">
+            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div class="bg-blue-600 dark:bg-blue-500 h-2 rounded-full" style="width: 80%"></div>
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 text-right">80%</div>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex -space-x-2">
+              <img class="w-7 h-7 rounded-full border-2 border-white dark:border-gray-800" src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20middle-aged%20black%20man%20with%20short%20hair%2C%20wearing%20a%20business%20suit%2C%20neutral%20expression%2C%20high%20quality%20professional%20photo&width=100&height=100&seq=16&orientation=squarish" alt="User">
+            </div>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Apr 23</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Completed Column -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div class="p-4 bg-gray-100 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+        <div class="flex items-center justify-between">
+          <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Completed</h4>
+          <span class="px-2.5 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 bg-gray-200 dark:bg-gray-600 rounded-full">2</span>
+        </div>
+      </div>
+      <div class="p-4 space-y-4 max-h-[600px] overflow-y-auto kanban-column">
+        <!-- Task Card 1 -->
+        <div class="task-card p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex justify-between items-start mb-3">
+            <span class="px-2.5 py-1 text-xs font-medium text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-900/30 rounded-full">Completed</span>
+            <div class="flex space-x-1">
+              <button class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100- personally identifiable information has been removed -4 2 2 0 000 4z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <h5 class="font-medium text-gray-900 dark:text-white mb-2">Redesign homepage layout</h5>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Create a more engaging and responsive homepage design</p>
+          <div class="mb-3">
+            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div class="bg-green-500 dark:bg-green-400 h-2 rounded-full" style="width: 100%"></div>
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 text-right">Completed</div>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex -space-x-2">
+              <img class="w-7 h-7 rounded-full border-2 border-white dark:border-gray-800" src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20young%20business%20woman%20with%20medium%20length%20brown%20hair%2C%20wearing%20business%20attire%2C%20neutral%20expression%2C%20high%20quality%20professional%20photo&width=100&height=100&seq=17&orientation=squarish" alt="User">
+            </div>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Apr 20</span>
+          </div>
+        </div>
+        <!-- Task Card 2 -->
+        <div class="task-card p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex justify-between items-start mb-3">
+            <span class="px-2.5 py-1 text-xs font-medium text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-900/30 rounded-full">Completed</span>
+            <div class="flex space-x-1">
+              <button class="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <h5 class="font-medium text-gray-900 dark:text-white mb-2">Implement email notification system</h5>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Set up automated email notifications for user actions</p>
+          <div class="mb-3">
+            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div class="bg-green-500 dark:bg-green-400 h-2 rounded-full" style="width: 100%"></div>
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 text-right">Completed</div>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex -space-x-2">
+              <img class="w-7 h-7 rounded-full border-2 border-white dark:border-gray-800" src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20young%20business%20man%20with%20short%20hair%2C%20wearing%20a%20business%20suit%2C%20neutral%20expression%2C%20high%20quality%20professional%20photo&width=100&height=100&seq=18&orientation=squarish" alt="User">
+              <img class="w-7 h-7 rounded-full border-2 border-white dark:border-gray-800" src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20middle-aged%20business%20man%20with%20glasses%2C%20wearing%20a%20business%20suit%2C%20neutral%20expression%2C%20high%20quality%20professional%20photo&width=100&height=100&seq=19&orientation=squarish" alt="User">
+            </div>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Apr 18</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+
+
+
+  
+
+
+    </div>
+  </div>
+</div>
+
+<!-- Include ApexCharts and Initialize Chart -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var options = {
+      chart: {
+        type: "area",
+        height: 435,
+        zoom: {
+          enabled: true
+        }
+      },
+      series: [
+        {
+          name: "Revenue",
+          data: [6300, 6200, 6156, 6600, 6300, 6200, 6100]
+        },
+        {
+          name: "Revenue (previous period)",
+          data: [6600, 6800, 6424, 6300, 6700, 6800, 6500]
+        }
+      ],
+      xaxis: {
+        categories: ["01 Feb", "02 Feb", "03 Feb", "04 Feb", "05 Feb", "06 Feb", "07 Feb"],
+        labels: {
+          style: {
+            fontFamily: "Inter, sans-serif",
+            fontSize: "14px",
+            fontWeight: 500,
+            colors: "#9ca3af"
+          }
+        }
+      },
+      yaxis: {
+        min: 6000,
+        max: 6800,
+        labels: {
+          style: {
+            fontFamily: "Inter, sans-serif",
+            fontSize: "14px",
+            fontWeight: 500,
+            colors: "#9ca3af"
+          },
+          formatter: function (val) {
+            return "$" + val;
+          }
+        }
+      },
+      colors: ["#1a56db", "#fdba8c"],
+      fill: {
+        type: "gradient",
+        gradient: {
+          shadeIntensity: 1,
+          opacityFrom: 0,
+          opacityTo: 0.15,
+          stops: [0, 100]
+        }
+      },
+      stroke: {
+        width: 4,
+        curve: "smooth"
+      },
+      markers: {
+        size: 5,
+        strokeWidth: 2,
+        strokeColors: "#ffffff"
+      },
+      tooltip: {
+        style: {
+          fontFamily: "Inter, sans-serif",
+          fontSize: "14px"
+        }
+      },
+      legend: {
+        position: "bottom",
+        fontFamily: "Inter, sans-serif",
+        fontSize: "14px",
+        fontWeight: 500,
+        labels: {
+          colors: "#9ca3af"
+        }
+      }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#main-chart"), options);
+    chart.render();
+  });
+</script>
+
+
+{% endblock %}

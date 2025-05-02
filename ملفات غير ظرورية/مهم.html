@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnTrack - Smart Learning Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        .dark-mode {
+            background-color: #1a202c;
+            color: #f7fafc;
+        }
+        .dark-mode-secondary {
+            background-color: #2d3748;
+            color: #f7fafc;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="min-h-screen flex">
+        <!-- Sidebar -->
+        <div class="sidebar w-64 bg-white shadow-lg hidden md:block">
+            <div class="p-4 gradient-bg text-white flex items-center">
+                <i class="fas fa-graduation-cap text-2xl mr-3"></i>
+                <h1 class="text-xl font-bold">LearnTrack</h1>
+            </div>
+            <div class="p-4">
+                <div class="mb-6">
+                    <button id="newCourseBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-plus mr-2"></i> New Course
+                    </button>
+                </div>
+                
+                <div class="mb-4">
+                    <h3 class="text-xs uppercase text-gray-500 font-semibold mb-2">My Courses</h3>
+                    <ul id="courseList" class="space-y-1">
+                        <!-- Courses will be added here dynamically -->
+                    </ul>
+                </div>
+                
+                <div class="mb-4">
+                    <h3 class="text-xs uppercase text-gray-500 font-semibold mb-2">Learning Stats</h3>
+                    <div class="bg-gray-100 p-3 rounded-lg">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span>This Week</span>
+                            <span id="weekHours">0h 0m</span>
+                        </div>
+                        <div class="w-full bg-gray-300 rounded-full h-2">
+                            <div id="weekProgress" class="bg-indigo-600 h-2 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <h3 class="text-xs uppercase text-gray-500 font-semibold mb-2">Quick Links</h3>
+                    <ul class="space-y-1">
+                        <li><a href="#" class="flex items-center text-gray-700 hover:text-indigo-600 p-2 rounded hover:bg-gray-100">
+                            <i class="fas fa-calendar-alt mr-2"></i> Calendar
+                        </a></li>
+                        <li><a href="#" class="flex items-center text-gray-700 hover:text-indigo-600 p-2 rounded hover:bg-gray-100">
+                            <i class="fas fa-trophy mr-2"></i> Achievements
+                        </a></li>
+                        <li><a href="#" class="flex items-center text-gray-700 hover:text-indigo-600 p-2 rounded hover:bg-gray-100">
+                            <i class="fas fa-users mr-2"></i> Community
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <div class="mt-8">
+                    <div class="flex items-center justify-between p-2">
+                        <span class="text-sm text-gray-600">Dark Mode</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="darkModeToggle" class="sr-only peer">
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile header -->
+        <div class="md:hidden w-full gradient-bg text-white p-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <button id="mobileMenuBtn" class="mr-4">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <h1 class="text-xl font-bold">LearnTrack</h1>
+            </div>
+            <button id="newCourseBtnMobile" class="bg-white text-indigo-600 p-2 rounded-full">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile sidebar (hidden by default) -->
+        <div id="mobileSidebar" class="sidebar fixed inset-0 bg-white z-50 transform -translate-x-full md:hidden">
+            <div class="p-4 gradient-bg text-white flex items-center justify-between">
+                <div class="flex items-center">
+                    <i class="fas fa-graduation-cap text-2xl mr-3"></i>
+                    <h1 class="text-xl font-bold">LearnTrack</h1>
+                </div>
+                <button id="closeMobileMenu" class="text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="p-4 overflow-y-auto h-full">
+                <!-- Same content as desktop sidebar -->
+                <div class="mb-6">
+                    <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-plus mr-2"></i> New Course
+                    </button>
+                </div>
+                
+                <div class="mb-4">
+                    <h3 class="text-xs uppercase text-gray-500 font-semibold mb-2">My Courses</h3>
+                    <ul id="mobileCourseList" class="space-y-1">
+                        <!-- Courses will be added here dynamically -->
+                    </ul>
+                </div>
+                
+                <div class="mb-4">
+                    <h3 class="text-xs uppercase text-gray-500 font-semibold mb-2">Learning Stats</h3>
+                    <div class="bg-gray-100 p-3 rounded-lg">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span>This Week</span>
+                            <span>2h 45m</span>
+                        </div>
+                        <div class="w-full bg-gray-300 rounded-full h-2">
+                            <div class="bg-indigo-600 h-2 rounded-full" style="width: 55%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <h3 class="text-xs uppercase text-gray-500 font-semibold mb-2">Quick Links</h3>
+                    <ul class="space-y-1">
+                        <li><a href="#" class="flex items-center text-gray-700 hover:text-indigo-600 p-2 rounded hover:bg-gray-100">
+                            <i class="fas fa-calendar-alt mr-2"></i> Calendar
+                        </a></li>
+                        <li><a href="#" class="flex items-center text-gray-700 hover:text-indigo-600 p-2 rounded hover:bg-gray-100">
+                            <i class="fas fa-trophy mr-2"></i> Achievements
+                        </a></li>
+                        <li><a href="#" class="flex items-center text-gray-700 hover:text-indigo-600 p-2 rounded hover:bg-gray-100">
+                            <i class="fas fa-users mr-2"></i> Community
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <div class="mt-8">
+                    <div class="flex items-center justify-between p-2">
+                        <span class="text-sm text-gray-600">Dark Mode</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer">
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top navigation -->
+            <div class="bg-white shadow-sm hidden md:block">
+                <div class="flex items-center justify-between p-4">
+                    <div class="flex items-center">
+                        <h2 id="currentCourseTitle" class="text-xl font-semibold text-gray-800">Select a course to begin</h2>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <input type="text" placeholder="Search..." class="pl-10 pr-4 py-2 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            <i class="fas fa-search absolute left-3 top-2.5 text-gray-400"></i>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="relative">
+                                <button id="notificationsBtn" class="p-2 rounded-full hover:bg-gray-100 relative">
+                                    <i class="fas fa-bell text-gray-600"></i>
+                                    <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                                </button>
+                                <div id="notificationsDropdown" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg z-10">
+                                    <div class="p-3 border-b">
+                                        <h3 class="font-medium">Notifications</h3>
+                                    </div>
+                                    <div class="max-h-60 overflow-y-auto">
+                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Your learning goal is 75% complete</a>
+                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">New resources added to JavaScript course</a>
+                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Community challenge starts tomorrow</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-medium cursor-pointer">
+                                <span>JS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main content area -->
+            <div class="flex-1 overflow-auto p-4 md:p-6">
+                <!-- Empty state -->
+                <div id="emptyState" class="flex flex-col items-center justify-center h-full text-center">
+                    <i class="fas fa-book-open text-5xl text-gray-300 mb-4"></i>
+                    <h3 class="text-xl font-medium text-gray-700 mb-2">No course selected</h3>
+                    <p class="text-gray-500 mb-6 max-w-md">Select an existing course or create a new one to start tracking your learning progress.</p>
+                    <button id="emptyStateNewCourseBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-6 rounded-lg">
+                        Create New Course
+                    </button>
+                </div>
+                
+                <!-- Course content (hidden by default) -->
+                <div id="courseContent" class="hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Left column -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- Course overview -->
+                            <div class="bg-white rounded-xl shadow-sm p-6">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <h2 id="courseTitle" class="text-2xl font-bold text-gray-800">JavaScript Fundamentals</h2>
+                                        <p id="courseCategory" class="text-indigo-600 text-sm font-medium">Programming</p>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button class="p-2 rounded-full hover:bg-gray-100">
+                                            <i class="fas fa-edit text-gray-500"></i>
+                                        </button>
+                                        <button class="p-2 rounded-full hover:bg-gray-100">
+                                            <i class="fas fa-share-alt text-gray-500"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center justify-between mb-6">
+                                    <div>
+                                        <p class="text-gray-500 text-sm">Started on <span id="courseStartDate" class="font-medium">Jun 15, 2023</span></p>
+                                        <p class="text-gray-500 text-sm">Goal: <span id="courseGoal" class="font-medium">10 hours</span> this week</p>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="relative w-16 h-16 mr-3">
+                                            <svg class="w-full h-full" viewBox="0 0 36 36">
+                                                <circle cx="18" cy="18" r="16" fill="none" stroke="#e6e6e6" stroke-width="2"></circle>
+                                                <circle id="courseProgressCircle" cx="18" cy="18" r="16" fill="none" stroke="#4f46e5" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="40"></circle>
+                                            </svg>
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <span id="courseProgressPercent" class="text-sm font-bold">60%</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Progress</p>
+                                            <p class="font-medium"><span id="courseCompletedHours">6</span>/<span id="courseTotalHours">10</span> hours</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex space-x-3">
+                                    <button class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-play mr-2"></i> Continue
+                                    </button>
+                                    <button class="flex-1 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 py-2 px-4 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-calendar-plus mr-2"></i> Schedule
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Topics list -->
+                            <div class="bg-white rounded-xl shadow-sm p-6">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-lg font-semibold text-gray-800">Topics</h3>
+                                    <button id="addTopicBtn" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex items-center">
+                                        <i class="fas fa-plus mr-1"></i> Add Topic
+                                    </button>
+                                </div>
+                                
+                                <div id="topicsList" class="space-y-3">
+                                    <!-- Topics will be added here dynamically -->
+                                </div>
+                            </div>
+                            
+                            <!-- Learning resources -->
+                            <div class="bg-white rounded-xl shadow-sm p-6">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-lg font-semibold text-gray-800">Learning Resources</h3>
+                                    <button id="addResourceBtn" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex items-center">
+                                        <i class="fas fa-plus mr-1"></i> Add Resource
+                                    </button>
+                                </div>
+                                
+                                <div id="resourcesList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- Resources will be added here dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right column -->
+                        <div class="space-y-6">
+                            <!-- Timer widget -->
+                            <div class="bg-white rounded-xl shadow-sm p-6">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-4">Today's Focus</h3>
+                                
+                                <div class="flex flex-col items-center mb-4">
+                                    <div class="relative w-40 h-40 mb-4">
+                                        <svg class="w-full h-full" viewBox="0 0 36 36">
+                                            <circle cx="18" cy="18" r="16" fill="none" stroke="#e6e6e6" stroke-width="2"></circle>
+                                            <circle id="timerCircle" cx="18" cy="18" r="16" fill="none" stroke="#4f46e5" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="100"></circle>
+                                        </svg>
+                                        <div class="absolute inset-0 flex items-center justify-center flex-col">
+                                            <span id="timerDisplay" class="text-3xl font-bold">25:00</span>
+                                            <span class="text-sm text-gray-500">minutes</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex space-x-3 w-full">
+                                        <button id="startTimerBtn" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg">
+                                            Start
+                                        </button>
+                                        <button id="resetTimerBtn" class="flex-1 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 py-2 px-4 rounded-lg">
+                                            Reset
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Focus on topic</label>
+                                    <select id="timerTopicSelect" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                        <option value="">Select a topic</option>
+                                        <!-- Topics will be added here dynamically -->
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Notes widget -->
+                            <div class="bg-white rounded-xl shadow-sm p-6">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-lg font-semibold text-gray-800">Today's Notes</h3>
+                                    <button id="addNoteBtn" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex items-center">
+                                        <i class="fas fa-plus mr-1"></i> Add Note
+                                    </button>
+                                </div>
+                                
+                                <div id="notesList" class="space-y-4">
+                                    <!-- Notes will be added here dynamically -->
+                                </div>
+                            </div>
+                            
+                            <!-- Recommended accounts -->
+                            <div class="bg-white rounded-xl shadow-sm p-6">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-4">Recommended Accounts</h3>
+                                
+                                <div id="recommendedAccounts" class="space-y-3">
+                                    <!-- Accounts will be added here dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- New Course Modal -->
+    <div id="newCourseModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 mx-4 fade-in">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold text-gray-800">Create New Course</h3>
+                <button id="closeNewCourseModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="newCourseForm" class="space-y-4">
+                <div>
+                    <label for="courseName" class="block text-sm font-medium text-gray-700 mb-1">Course Name</label>
+                    <input type="text" id="courseName" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g. JavaScript Fundamentals" required>
+                </div>
+                
+                <div>
+                    <label for="courseCategory" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <select id="courseCategorySelect" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="Programming">Programming</option>
+                        <option value="Design">Design</option>
+                        <option value="Business">Business</option>
+                        <option value="Language">Language</option>
+                        <option value="Science">Science</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="courseGoalHours" class="block text-sm font-medium text-gray-700 mb-1">Weekly Goal (hours)</label>
+                    <input type="number" id="courseGoalHours" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" min="1" value="5">
+                </div>
+                
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg">
+                        Create Course
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- New Topic Modal -->
+    <div id="newTopicModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 mx-4 fade-in">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold text-gray-800">Add New Topic</h3>
+                <button id="closeNewTopicModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="newTopicForm" class="space-y-4">
+                <div>
+                    <label for="topicName" class="block text-sm font-medium text-gray-700 mb-1">Topic Name</label>
+                    <input type="text" id="topicName" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g. Functions and Scope" required>
+                </div>
+                
+                <div>
+                    <label for="topicLevel" class="block text-sm font-medium text-gray-700 mb-1">Difficulty Level</label>
+                    <select id="topicLevel" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="topicEstimatedTime" class="block text-sm font-medium text-gray-700 mb-1">Estimated Time (hours)</label>
+                    <input type="number" id="topicEstimatedTime" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" min="0.5" step="0.5" value="2">
+                </div>
+                
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg">
+                        Add Topic
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- New Resource Modal -->
+    <div id="newResourceModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 mx-4 fade-in">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold text-gray-800">Add Learning Resource</h3>
+                <button id="closeNewResourceModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="newResourceForm" class="space-y-4">
+                <div>
+                    <label for="resourceType" class="block text-sm font-medium text-gray-700 mb-1">Resource Type</label>
+                    <select id="resourceType" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="video">Video</option>
+                        <option value="article">Article</option>
+                        <option value="book">Book</option>
+                        <option value="course">Online Course</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="resourceTitle" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                    <input type="text" id="resourceTitle" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g. JavaScript Functions Explained" required>
+                </div>
+                
+                <div>
+                    <label for="resourceUrl" class="block text-sm font-medium text-gray-700 mb-1">URL (optional)</label>
+                    <input type="url" id="resourceUrl" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="https://example.com">
+                </div>
+                
+                <div>
+                    <label for="resourceTopic" class="block text-sm font-medium text-gray-700 mb-1">Related Topic (optional)</label>
+                    <select id="resourceTopic" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">Select a topic</option>
+                        <!-- Topics will be added here dynamically -->
+                    </select>
+                </div>
+                
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg">
+                        Add Resource
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- New Note Modal -->
+    <div id="newNoteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 mx-4 fade-in">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold text-gray-800">Add New Note</h3>
+                <button id="closeNewNoteModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="newNoteForm" class="space-y-4">
+                <div>
+                    <label for="noteTitle" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                    <input type="text" id="noteTitle" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g. Key Concepts">
+                </div>
+                
+                <div>
+                    <label for="noteContent" class="block text-sm font-medium text-gray-700 mb-1">Content</label>
+                    <textarea id="noteContent" rows="4" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Write your notes here..."></textarea>
+                </div>
+                
+                <div>
+                    <label for="noteTopic" class="block text-sm font-medium text-gray-700 mb-1">Related Topic (optional)</label>
+                    <select id="noteTopic" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">Select a topic</option>
+                        <!-- Topics will be added here dynamically -->
+                    </select>
+                </div>
+                
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg">
+                        Save Note
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Sample data
+        let courses = [
+            {
+                id: 1,
+                title: "JavaScript Fundamentals",
+                category: "Programming",
+                startDate: "Jun 15, 2023",
+                goalHours: 10,
+                completedHours: 6,
+                progress: 60,
+                topics: [
+                    { id: 1, name: "Variables and Data Types", level: "Beginner", estimatedTime: 2, completedTime: 1.5, status: "in-progress" },
+                    { id: 2, name: "Functions and Scope", level: "Beginner", estimatedTime: 3, completedTime: 2.5, status: "in-progress" },
+                    { id: 3, name: "Arrays and Objects", level: "Beginner", estimatedTime: 2, completedTime: 0, status: "not-started" },
+                    { id: 4, name: "DOM Manipulation", level: "Intermediate", estimatedTime: 3, completedTime: 2, status: "in-progress" }
+                ],
+                resources: [
+                    { id: 1, type: "video", title: "JavaScript Crash Course", url: "https://youtube.com/123", topicId: 1 },
+                    { id: 2, type: "article", title: "Understanding Scope in JS", url: "https://example.com", topicId: 2 },
+                    { id: 3, type: "course", title: "Modern JavaScript Course", url: "https://udemy.com/123", topicId: null }
+                ],
+                notes: [
+                    { id: 1, title: "Hoisting", content: "Variable and function declarations are hoisted to the top of their scope.", topicId: 2, date: "Jun 16, 2023" },
+                    { id: 2, title: "DOM Methods", content: "querySelector is more versatile than getElementById.", topicId: 4, date: "Jun 20, 2023" }
+                ]
+            },
+            {
+                id: 2,
+                title: "UI/UX Design Principles",
+                category: "Design",
+                startDate: "May 1, 2023",
+                goalHours: 8,
+                completedHours: 5,
+                progress: 62.5,
+                topics: [
+                    { id: 5, name: "Color Theory", level: "Beginner", estimatedTime: 2, completedTime: 1, status: "in-progress" },
+                    { id: 6, name: "Typography", level: "Beginner", estimatedTime: 2, completedTime: 2, status: "completed" }
+                ],
+                resources: [
+                    { id: 4, type: "video", title: "UI Design Basics", url: "https://youtube.com/456", topicId: null },
+                    { id: 5, type: "book", title: "Don't Make Me Think", url: "", topicId: null }
+                ],
+                notes: [
+                    { id: 3, title: "Contrast", content: "High contrast improves readability.", topicId: 5, date: "May 5, 2023" }
+                ]
+            }
+        ];
+        
+        let recommendedAccounts = [
+            { name: "JavaScript Mastery", platform: "YouTube", followers: "1.2M", category: "Programming" },
+            { name: "DesignCourse", platform: "YouTube", followers: "850K", category: "Design" },
+            { name: "freeCodeCamp", platform: "Twitter", followers: "350K", category: "Programming" },
+            { name: "UX Collective", platform: "Medium", followers: "120K", category: "Design" }
+        ];
+        
+        let currentCourseId = null;
+        let timerInterval = null;
+        let timerSeconds = 25 * 60; // 25 minutes in seconds
+        let timerRunning = false;
+        
+        // DOM elements
+        const courseList = document.getElementById('courseList');
+        const mobileCourseList = document.getElementById('mobileCourseList');
+        const emptyState = document.getElementById('emptyState');
+        const courseContent = document.getElementById('courseContent');
+        const currentCourseTitle = document.getElementById('currentCourseTitle');
+        const courseTitle = document.getElementById('courseTitle');
+        const courseCategory = document.getElementById('courseCategory');
+        const courseStartDate = document.getElementById('courseStartDate');
+        const courseGoal = document.getElementById('courseGoal');
+        const courseProgressPercent = document.getElementById('courseProgressPercent');
+        const courseCompletedHours = document.getElementById('courseCompletedHours');
+        const courseTotalHours = document.getElementById('courseTotalHours');
+        const courseProgressCircle = document.getElementById('courseProgressCircle');
+        const topicsList = document.getElementById('topicsList');
+        const resourcesList = document.getElementById('resourcesList');
+        const notesList = document.getElementById('notesList');
+        const recommendedAccountsList = document.getElementById('recommendedAccounts');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const timerCircle = document.getElementById('timerCircle');
+        const weekHours = document.getElementById('weekHours');
+        const weekProgress = document.getElementById('weekProgress');
+        
+        // Modal elements
+        const newCourseModal = document.getElementById('newCourseModal');
+        const newTopicModal = document.getElementById('newTopicModal');
+        const newResourceModal = document.getElementById('newResourceModal');
+        const newNoteModal = document.getElementById('newNoteModal');
+        
+        // Buttons
+        const newCourseBtn = document.getElementById('newCourseBtn');
+        const newCourseBtnMobile = document.getElementById('newCourseBtnMobile');
+        const emptyStateNewCourseBtn = document.getElementById('emptyStateNewCourseBtn');
+        const closeNewCourseModal = document.getElementById('closeNewCourseModal');
+        const addTopicBtn = document.getElementById('addTopicBtn');
+        const closeNewTopicModal = document.getElementById('closeNewTopicModal');
+        const addResourceBtn = document.getElementById('addResourceBtn');
+        const closeNewResourceModal = document.getElementById('closeNewResourceModal');
+        const addNoteBtn = document.getElementById('addNoteBtn');
+        const closeNewNoteModal = document.getElementById('closeNewNoteModal');
+        const startTimerBtn = document.getElementById('startTimerBtn');
+        const resetTimerBtn = document.getElementById('resetTimerBtn');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileSidebar = document.getElementById('mobileSidebar');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const notificationsBtn = document.getElementById('notificationsBtn');
+        const notificationsDropdown = document.getElementById('notificationsDropdown');
+        
+        // Forms
+        const newCourseForm = document.getElementById('newCourseForm');
+        const newTopicForm = document.getElementById('newTopicForm');
+        const newResourceForm = document.getElementById('newResourceForm');
+        const newNoteForm = document.getElementById('newNoteForm');
+        
+        // Initialize the app
+        function init() {
+            renderCourseList();
+            updateWeeklyStats();
+            
+            // Set up event listeners
+            setupEventListeners();
+        }
+        
+        // Set up all event listeners
+        function setupEventListeners() {
+            // Course buttons
+            newCourseBtn.addEventListener('click', () => newCourseModal.classList.remove('hidden'));
+            newCourseBtnMobile.addEventListener('click', () => newCourseModal.classList.remove('hidden'));
+            emptyStateNewCourseBtn.addEventListener('click', () => newCourseModal.classList.remove('hidden'));
+            closeNewCourseModal.addEventListener('click', () => newCourseModal.classList.add('hidden'));
+            
+            // Topic buttons
+            addTopicBtn.addEventListener('click', () => {
+                // Populate topic select in modal
+                const topicSelect = document.getElementById('resourceTopic');
+                topicSelect.innerHTML = '<option value="">Select a topic</option>';
+                
+                const currentCourse = getCurrentCourse();
+                if (currentCourse) {
+                    currentCourse.topics.forEach(topic => {
+                        const option = document.createElement('option');
+                        option.value = topic.id;
+                        option.textContent = topic.name;
+                        topicSelect.appendChild(option);
+                    });
+                }
+                
+                newTopicModal.classList.remove('hidden');
+            });
+            closeNewTopicModal.addEventListener('click', () => newTopicModal.classList.add('hidden'));
+            
+            // Resource buttons
+            addResourceBtn.addEventListener('click', () => {
+                // Populate resource topic select in modal
+                const resourceTopicSelect = document.getElementById('resourceTopic');
+                resourceTopicSelect.innerHTML = '<option value="">Select a topic</option>';
+                
+                const currentCourse = getCurrentCourse();
+                if (currentCourse) {
+                    currentCourse.topics.forEach(topic => {
+                        const option = document.createElement('option');
+                        option.value = topic.id;
+                        option.textContent = topic.name;
+                        resourceTopicSelect.appendChild(option);
+                    });
+                }
+                
+                newResourceModal.classList.remove('hidden');
+            });
+            closeNewResourceModal.addEventListener('click', () => newResourceModal.classList.add('hidden'));
+            
+            // Note buttons
+            addNoteBtn.addEventListener('click', () => {
+                // Populate note topic select in modal
+                const noteTopicSelect = document.getElementById('noteTopic');
+                noteTopicSelect.innerHTML = '<option value="">Select a topic</option>';
+                
+                const currentCourse = getCurrentCourse();
+                if (currentCourse) {
+                    currentCourse.topics.forEach(topic => {
+                        const option = document.createElement('option');
+                        option.value = topic.id;
+                        option.textContent = topic.name;
+                        noteTopicSelect.appendChild(option);
+                    });
+                }
+                
+                newNoteModal.classList.remove('hidden');
+            });
+            closeNewNoteModal.addEventListener('click', () => newNoteModal.classList.add('hidden'));
+            
+            // Timer buttons
+            startTimerBtn.addEventListener('click', toggleTimer);
+            resetTimerBtn.addEventListener('click', resetTimer);
+            
+            // Form submissions
+            newCourseForm.addEventListener('submit', handleNewCourseSubmit);
+            newTopicForm.addEventListener('submit', handleNewTopicSubmit);
+            newResourceForm.addEventListener('submit', handleNewResourceSubmit);
+            newNoteForm.addEventListener('submit', handleNewNoteSubmit);
+            
+            // Mobile menu
+            mobileMenuBtn.addEventListener('click', () => mobileSidebar.classList.remove('translate-x-full'));
+            closeMobileMenu.addEventListener('click', () => mobileSidebar.classList.add('translate-x-full'));
+            
+            // Dark mode toggle
+            darkModeToggle.addEventListener('change', toggleDarkMode);
+            
+            // Notifications dropdown
+            notificationsBtn.addEventListener('click', () => {
+                notificationsDropdown.classList.toggle('hidden');
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === newCourseModal) newCourseModal.classList.add('hidden');
+                if (e.target === newTopicModal) newTopicModal.classList.add('hidden');
+                if (e.target === newResourceModal) newResourceModal.classList.add('hidden');
+                if (e.target === newNoteModal) newNoteModal.classList.add('hidden');
+                
+                if (e.target !== notificationsBtn && e.target !== notificationsDropdown && !notificationsDropdown.contains(e.target)) {
+                    notificationsDropdown.classList.add('hidden');
+                }
+            });
+        }
+        
+        // Render the course list
+        function renderCourseList() {
+            courseList.innerHTML = '';
+            mobileCourseList.innerHTML = '';
+            
+            if (courses.length === 0) {
+                const emptyItem = document.createElement('li');
+                emptyItem.className = 'text-gray-500 text-sm p-2';
+                emptyItem.textContent = 'No courses yet';
+                courseList.appendChild(emptyItem);
+                mobileCourseList.appendChild(emptyItem.cloneNode(true));
+                return;
+            }
+            
+            courses.forEach(course => {
+                const courseItem = document.createElement('li');
+                courseItem.className = `flex items-center justify-between p-2 rounded-lg cursor-pointer hover:bg-gray-100 ${currentCourseId === course.id ? 'bg-indigo-50' : ''}`;
+                courseItem.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="h-8 w-8 rounded-full ${getCategoryColor(course.category)} flex items-center justify-center text-white font-medium mr-3">
+                            ${course.category.charAt(0)}
+                        </div>
+                        <span class="font-medium">${course.title}</span>
+                    </div>
+                    <span class="text-xs text-gray-500">${course.progress}%</span>
+                `;
+                courseItem.addEventListener('click', () => selectCourse(course.id));
+                
+                const mobileCourseItem = courseItem.cloneNode(true);
+                
+                courseList.appendChild(courseItem);
+                mobileCourseList.appendChild(mobileCourseItem);
+            });
+        }
+        
+        // Select a course to view
+        function selectCourse(courseId) {
+            currentCourseId = courseId;
+            const course = getCurrentCourse();
+            
+            if (!course) return;
+            
+            // Update UI
+            emptyState.classList.add('hidden');
+            courseContent.classList.remove('hidden');
+            currentCourseTitle.textContent = course.title;
+            courseTitle.textContent = course.title;
+            courseCategory.textContent = course.category;
+            courseStartDate.textContent = course.startDate;
+            courseGoal.textContent = `${course.goalHours} hours`;
+            courseProgressPercent.textContent = `${course.progress}%`;
+            courseCompletedHours.textContent = course.completedHours;
+            courseTotalHours.textContent = course.goalHours;
+            
+            // Update progress circle
+            const circumference = 2 * Math.PI * 16;
+            const offset = circumference - (course.progress / 100) * circumference;
+            courseProgressCircle.style.strokeDashoffset = offset;
+            
+            // Render course content
+            renderTopics();
+            renderResources();
+            renderNotes();
+            renderRecommendedAccounts();
+            
+            // Update topic selects
+            updateTopicSelects();
+            
+            // Update course list styling
+            renderCourseList();
+            
+            // Close mobile menu if open
+            mobileSidebar.classList.add('translate-x-full');
+        }
+        
+        // Render topics for the current course
+        function renderTopics() {
+            topicsList.innerHTML = '';
+            const course = getCurrentCourse();
+            
+            if (!course || !course.topics || course.topics.length === 0) {
+                topicsList.innerHTML = '<p class="text-gray-500 text-center py-4">No topics yet. Add your first topic!</p>';
+                return;
+            }
+            
+            course.topics.forEach(topic => {
+                const topicItem = document.createElement('div');
+                topicItem.className = 'bg-gray-50 rounded-lg p-4 border border-gray-200';
+                topicItem.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h4 class="font-medium text-gray-800">${topic.name}</h4>
+                            <span class="text-xs px-2 py-1 rounded-full ${getLevelColor(topic.level)}">${topic.level}</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-sm text-gray-500 mr-2">${topic.completedTime}/${topic.estimatedTime}h</span>
+                            <div class="w-8 h-8 relative">
+                                <svg class="w-full h-full" viewBox="0 0 36 36">
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#e6e6e6" stroke-width="2"></circle>
+                                    <circle cx="18" cy="18" r="16" fill="none" stroke="#4f46e5" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="${100 - (topic.completedTime / topic.estimatedTime * 100)}"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-xs font-bold">${Math.round(topic.completedTime / topic.estimatedTime * 100)}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center mt-3">
+                        <span class="text-xs text-gray-500">${getStatusText(topic.status)}</span>
+                        <div class="flex space-x-2">
+                            <button class="p-1 text-gray-500 hover:text-indigo-600" data-topic-id="${topic.id}" data-action="start">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button class="p-1 text-gray-500 hover:text-indigo-600" data-topic-id="${topic.id}" data-action="edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                topicsList.appendChild(topicItem);
+            });
+            
+            // Add event listeners to topic buttons
+            document.querySelectorAll('[data-action="start"]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const topicId = parseInt(e.currentTarget.getAttribute('data-topic-id'));
+                    startTopicTimer(topicId);
+                });
+            });
+            
+            document.querySelectorAll('[data-action="edit"]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const topicId = parseInt(e.currentTarget.getAttribute('data-topic-id'));
+                    editTopic(topicId);
+                });
+            });
+        }
+        
+        // Render resources for the current course
+        function renderResources() {
+            resourcesList.innerHTML = '';
+            const course = getCurrentCourse();
+            
+            if (!course || !course.resources || course.resources.length === 0) {
+                resourcesList.innerHTML = '<p class="text-gray-500 text-center py-4 col-span-2">No resources yet. Add your first resource!</p>';
+                return;
+            }
+            
+            course.resources.forEach(resource => {
+                const resourceItem = document.createElement('div');
+                resourceItem.className = 'border border-gray-200 rounded-lg p-4 hover:border-indigo-300 transition-colors';
+                
+                let icon = '';
+                let bgColor = 'bg-gray-100';
+                
+                switch(resource.type) {
+                    case 'video':
+                        icon = 'fas fa-video';
+                        bgColor = 'bg-red-100 text-red-600';
+                        break;
+                    case 'article':
+                        icon = 'fas fa-newspaper';
+                        bgColor = 'bg-blue-100 text-blue-600';
+                        break;
+                    case 'book':
+                        icon = 'fas fa-book';
+                        bgColor = 'bg-purple-100 text-purple-600';
+                        break;
+                    case 'course':
+                        icon = 'fas fa-graduation-cap';
+                        bgColor = 'bg-green-100 text-green-600';
+                        break;
+                    default:
+                        icon = 'fas fa-link';
+                        bgColor = 'bg-indigo-100 text-indigo-600';
+                }
+                
+                const relatedTopic = resource.topicId ? course.topics.find(t => t.id === resource.topicId) : null;
+                
+                resourceItem.innerHTML = `
+                    <div class="flex items-start mb-3">
+                        <div class="h-10 w-10 rounded-full ${bgColor} flex items-center justify-center mr-3">
+                            <i class="${icon}"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-medium text-gray-800">${resource.title}</h4>
+                            ${relatedTopic ? `<span class="text-xs px-2 py-1 bg-indigo-50 text-indigo-600 rounded-full mt-1 inline-block">${relatedTopic.name}</span>` : ''}
+                        </div>
+                    </div>
+                    ${resource.url ? `
+                    <a href="${resource.url}" target="_blank" class="text-sm text-indigo-600 hover:text-indigo-800 flex items-center">
+                        <i class="fas fa-external-link-alt mr-1"></i> Open resource
+                    </a>
+                    ` : ''}
+                `;
+                resourcesList.appendChild(resourceItem);
+            });
+        }
+        
+        // Render notes for the current course
+        function renderNotes() {
+            notesList.innerHTML = '';
+            const course = getCurrentCourse();
+            
+            if (!course || !course.notes || course.notes.length === 0) {
+                notesList.innerHTML = '<p class="text-gray-500 text-center py-4">No notes yet. Add your first note!</p>';
+                return;
+            }
+            
+            course.notes.forEach(note => {
+                const noteItem = document.createElement('div');
+                noteItem.className = 'bg-gray-50 rounded-lg p-4 border border-gray-200';
+                
+                const relatedTopic = note.topicId ? course.topics.find(t => t.id === note.topicId) : null;
+                
+                noteItem.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-medium text-gray-800">${note.title}</h4>
+                        <span class="text-xs text-gray-500">${note.date}</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">${note.content}</p>
+                    ${relatedTopic ? `<span class="text-xs px-2 py-1 bg-indigo-50 text-indigo-600 rounded-full">${relatedTopic.name}</span>` : ''}
+                `;
+                notesList.appendChild(noteItem);
+            });
+        }
+        
+        // Render recommended accounts
+        function renderRecommendedAccounts() {
+            recommendedAccountsList.innerHTML = '';
+            
+            recommendedAccounts.forEach(account => {
+                const accountItem = document.createElement('div');
+                accountItem.className = 'flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg cursor-pointer';
+                accountItem.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 mr-3">
+                            <i class="fab fa-${account.platform.toLowerCase() === 'youtube' ? 'youtube' : account.platform.toLowerCase() === 'twitter' ? 'twitter' : 'medium'}"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">${account.name}</h4>
+                            <p class="text-xs text-gray-500">${account.platform} • ${account.followers} followers</p>
+                        </div>
+                    </div>
+                    <button class="text-indigo-600 hover:text-indigo-800">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                `;
+                recommendedAccountsList.appendChild(accountItem);
+            });
+        }
+        
+        // Update topic selects in various modals
+        function updateTopicSelects() {
+            const timerTopicSelect = document.getElementById('timerTopicSelect');
+            const resourceTopicSelect = document.getElementById('resourceTopic');
+            const noteTopicSelect = document.getElementById('noteTopic');
+            
+            // Clear existing options
+            timerTopicSelect.innerHTML = '<option value="">Select a topic</option>';
+            resourceTopicSelect.innerHTML = '<option value="">Select a topic</option>';
+            noteTopicSelect.innerHTML = '<option value="">Select a topic</option>';
+            
+            const course = getCurrentCourse();
+            if (course && course.topics) {
+                course.topics.forEach(topic => {
+                    const option = document.createElement('option');
+                    option.value = topic.id;
+                    option.textContent = topic.name;
+                    
+                    timerTopicSelect.appendChild(option.cloneNode(true));
+                    resourceTopicSelect.appendChild(option.cloneNode(true));
+                    noteTopicSelect.appendChild(option.cloneNode(true));
+                });
+            }
+        }
+        
+        // Handle new course form submission
+        function handleNewCourseSubmit(e) {
+            e.preventDefault();
+            
+            const courseName = document.getElementById('courseName').value;
+            const courseCategory = document.getElementById('courseCategorySelect').value;
+            const courseGoalHours = parseInt(document.getElementById('courseGoalHours').value);
+            
+            const newCourse = {
+                id: courses.length > 0 ? Math.max(...courses.map(c => c.id)) + 1 : 1,
+                title: courseName,
+                category: courseCategory,
+                startDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+                goalHours: courseGoalHours,
+                completedHours: 0,
+                progress: 0,
+                topics: [],
+                resources: [],
+                notes: []
+            };
+            
+            courses.push(newCourse);
+            renderCourseList();
+            newCourseModal.classList.add('hidden');
+            newCourseForm.reset();
+            
+            // Select the new course
+            selectCourse(newCourse.id);
+        }
+        
+        // Handle new topic form submission
+        function handleNewTopicSubmit(e) {
+            e.preventDefault();
+            
+            const topicName = document.getElementById('topicName').value;
+            const topicLevel = document.getElementById('topicLevel').value;
+            const topicEstimatedTime = parseFloat(document.getElementById('topicEstimatedTime').value);
+            
+            const newTopic = {
+                id: getCurrentCourse().topics.length > 0 ? Math.max(...getCurrentCourse().topics.map(t => t.id)) + 1 : 1,
+                name: topicName,
+                level: topicLevel,
+                estimatedTime: topicEstimatedTime,
+                completedTime: 0,
+                status: "not-started"
+            };
+            
+            getCurrentCourse().topics.push(newTopic);
+            renderTopics();
+            updateTopicSelects();
+            newTopicModal.classList.add('hidden');
+            newTopicForm.reset();
+        }
+        
+        // Handle new resource form submission
+        function handleNewResourceSubmit(e) {
+            e.preventDefault();
+            
+            const resourceType = document.getElementById('resourceType').value;
+            const resourceTitle = document.getElementById('resourceTitle').value;
+            const resourceUrl = document.getElementById('resourceUrl').value;
+            const resourceTopic = document.getElementById('resourceTopic').value;
+            
+            const newResource = {
+                id: getCurrentCourse().resources.length > 0 ? Math.max(...getCurrentCourse().resources.map(r => r.id)) + 1 : 1,
+                type: resourceType,
+                title: resourceTitle,
+                url: resourceUrl,
+                topicId: resourceTopic ? parseInt(resourceTopic) : null
+            };
+            
+            getCurrentCourse().resources.push(newResource);
+            renderResources();
+            newResourceModal.classList.add('hidden');
+            newResourceForm.reset();
+        }
+        
+        // Handle new note form submission
+        function handleNewNoteSubmit(e) {
+            e.preventDefault();
+            
+            const noteTitle = document.getElementById('noteTitle').value;
+            const noteContent = document.getElementById('noteContent').value;
+            const noteTopic = document.getElementById('noteTopic').value;
+            
+            const newNote = {
+                id: getCurrentCourse().notes.length > 0 ? Math.max(...getCurrentCourse().notes.map(n => n.id)) + 1 : 1,
+                title: noteTitle,
+                content: noteContent,
+                topicId: noteTopic ? parseInt(noteTopic) : null,
+                date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+            };
+            
+            getCurrentCourse().notes.push(newNote);
+            renderNotes();
+            newNoteModal.classList.add('hidden');
+            newNoteForm.reset();
+        }
+        
+        // Start timer for a specific topic
+        function startTopicTimer(topicId) {
+            const topicSelect = document.getElementById('timerTopicSelect');
+            topicSelect.value = topicId;
+            
+            // Start the timer
+            if (!timerRunning) {
+                toggleTimer();
+            } else {
+                // If timer is already running, just update the topic
+                alert('Timer is already running. Please reset the timer to change topics.');
+            }
+        }
+        
+        // Toggle timer between running and paused
+        function toggleTimer() {
+            if (timerRunning) {
+                // Pause timer
+                clearInterval(timerInterval);
+                startTimerBtn.textContent = 'Resume';
+                timerRunning = false;
+            } else {
+                // Start timer
+                timerRunning = true;
+                startTimerBtn.textContent = 'Pause';
+                
+                timerInterval = setInterval(() => {
+                    timerSeconds--;
+                    
+                    // Update display
+                    const minutes = Math.floor(timerSeconds / 60);
+                    const seconds = timerSeconds % 60;
+                    timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    
+                    // Update progress circle
+                    const totalSeconds = 25 * 60;
+                    const percentage = (timerSeconds / totalSeconds) * 100;
+                    const circumference = 2 * Math.PI * 16;
+                    const offset = circumference - (percentage / 100) * circumference;
+                    timerCircle.style.strokeDashoffset = offset;
+                    
+                    // Timer finished
+                    if (timerSeconds <= 0) {
+                        clearInterval(timerInterval);
+                        timerRunning = false;
+                        startTimerBtn.textContent = 'Start';
+                        
+                        // Update course and topic stats
+                        const topicId = parseInt(document.getElementById('timerTopicSelect').value);
+                        if (topicId) {
+                            const course = getCurrentCourse();
+                            const topic = course.topics.find(t => t.id === topicId);
+                            
+                            if (topic) {
+                                // Add 25 minutes to completed time (converted to hours)
+                                const timeToAdd = 25 / 60;
+                                topic.completedTime = Math.min(topic.completedTime + timeToAdd, topic.estimatedTime);
+                                
+                                // Update topic status
+                                if (topic.completedTime >= topic.estimatedTime) {
+                                    topic.status = 'completed';
+                                } else if (topic.status === 'not-started') {
+                                    topic.status = 'in-progress';
+                                }
+                                
+                                // Update course stats
+                                course.completedHours = course.topics.reduce((sum, t) => sum + t.completedTime, 0);
+                                course.progress = Math.round((course.completedHours / course.goalHours) * 100);
+                                
+                                // Update UI
+                                renderTopics();
+                                selectCourse(course.id); // Refresh course view
+                                updateWeeklyStats();
+                            }
+                        }
+                        
+                        // Show completion alert
+                        alert('Timer completed! Your learning progress has been updated.');
+                    }
+                }, 1000);
+            }
+        }
+        
+        // Reset timer to 25 minutes
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerSeconds = 25 * 60;
+            timerDisplay.textContent = '25:00';
+            timerCircle.style.strokeDashoffset = 100;
+            timerRunning = false;
+            startTimerBtn.textContent = 'Start';
+        }
+        
+        // Edit a topic (placeholder function)
+        function editTopic(topicId) {
+            alert(`Editing topic with ID: ${topicId}. This functionality would allow editing topic details in a real application.`);
+        }
+        
+        // Toggle dark mode
+        function toggleDarkMode() {
+            if (darkModeToggle.checked) {
+                document.body.classList.add('dark-mode');
+                document.body.classList.remove('bg-gray-50');
+                document.querySelectorAll('.bg-white').forEach(el => {
+                    el.classList.add('dark-mode-secondary');
+                    el.classList.remove('bg-white');
+                });
+            } else {
+                document.body.classList.remove('dark-mode');
+                document.body.classList.add('bg-gray-50');
+                document.querySelectorAll('.dark-mode-secondary').forEach(el => {
+                    el.classList.remove('dark-mode-secondary');
+                    el.classList.add('bg-white');
+                });
+            }
+        }
+        
+        // Update weekly stats
+        function updateWeeklyStats() {
+            const totalHours = courses.reduce((sum, course) => sum + course.completedHours, 0);
+            const goalHours = courses.reduce((sum, course) => sum + course.goalHours, 0);
+            const progress = Math.round((totalHours / goalHours) * 100) || 0;
+            
+            // Display total hours this week
+            const hours = Math.floor(totalHours);
+            const minutes = Math.round((totalHours - hours) * 60);
+            weekHours.textContent = `${hours}h ${minutes}m`;
+            
+            // Update progress bar
+            weekProgress.style.width = `${progress}%`;
+        }
+        
+        // Helper function to get current course
+        function getCurrentCourse() {
+            return courses.find(course => course.id === currentCourseId);
+        }
+        
+        // Helper function to get category color
+        function getCategoryColor(category) {
+            const colors = {
+                'Programming': 'bg-indigo-600',
+                'Design': 'bg-pink-600',
+                'Business': 'bg-green-600',
+                'Language': 'bg-blue-600',
+                'Science': 'bg-purple-600',
+                'Other': 'bg-gray-600'
+            };
+            return colors[category] || 'bg-gray-600';
+        }
+        
+        // Helper function to get level color
+        function getLevelColor(level) {
+            const colors = {
+                'Beginner': 'bg-green-100 text-green-800',
+                'Intermediate': 'bg-blue-100 text-blue-800',
+                'Advanced': 'bg-purple-100 text-purple-800'
+            };
+            return colors[level] || 'bg-gray-100 text-gray-800';
+        }
+        
+        // Helper function to get status text
+        function getStatusText(status) {
+            const texts = {
+                'not-started': 'Not started',
+                'in-progress': 'In progress',
+                'completed': 'Completed'
+            };
+            return texts[status] || status;
+        }
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

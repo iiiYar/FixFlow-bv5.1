@@ -1,0 +1,66 @@
+/* Tailwind base styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Sidebar styles */
+#drawer-navigation {
+    transition: transform 0.3s ease-in-out;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+/* Main content spacing */
+main {
+    margin-left: 16rem; /* Same as sidebar width */
+    margin-right: 1rem;
+    padding: 2rem;
+    min-height: 100vh;
+    transition: margin-left 0.3s ease-in-out;
+    max-width: calc(100% - 17rem);
+    background-color: #f9fafb;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure sidebar is visible on desktop */
+@media (min-width: 768px) {
+    #drawer-navigation {
+        transform: translateX(0) !important;
+    }
+    
+    /* Adjust main content when sidebar is collapsed */
+    .sidebar-collapsed main {
+        margin-left: 4rem;
+    }
+}
+
+/* Dark mode styles */
+.dark #drawer-navigation {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+.dark .sidebar-item-text {
+    color: #f3f4f6;
+}
+
+.dark main {
+    background-color: #111827;
+    color: #f3f4f6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    main {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 1.5rem;
+        padding-top: 4rem;
+        max-width: 100%;
+    }
+    
+
+}
