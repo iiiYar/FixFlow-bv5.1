@@ -13,6 +13,16 @@ def customers():
     all_customers = Customer.query.all()
     return render_template('customers.html', customers=all_customers)
 
+@customer_bp.route('/customers-2')
+def customers_2():
+    """عرض صفحة إدارة المستخدمين الجديدة"""
+    return render_template('customers-2.html')
+
+@customer_bp.route('/customers/add')
+def add_customer_page():
+    """عرض صفحة إضافة عميل جديد"""
+    return render_template('add_customer.html')
+
 @customer_bp.route('/add_customer', methods=['POST'])
 def add_customer():
     try:
@@ -265,3 +275,24 @@ def delete_customer(customer_id):
             'success': False,
             'message': 'حدث خطأ أثناء حذف العميل'
         }), 500
+
+
+@customer_bp.route('/api/customers', methods=['GET'])
+def get_customers_json():
+    """واجهة برمجة تطبيقات للحصول على قائمة العملاء بتنسيق JSON"""
+    customers = Customer.query.all()
+    customers_list = []
+    
+    for customer in customers:
+        customers_list.append({
+            'id': customer.id,
+            'name': customer.name,
+            'phone': customer.phone
+        })
+    
+    return jsonify({
+        'success': True,
+        'customers': customers_list
+    })
+
+    

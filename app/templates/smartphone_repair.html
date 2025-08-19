@@ -21,6 +21,16 @@
     </li>
 </ol>
 
+    <!-- Advanced Background Elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl animate-float"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-indigo-400/20 to-cyan-600/20 rounded-full blur-3xl animate-float" style="animation-delay: -1s;"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-to-r from-pink-400/10 to-yellow-400/10 rounded-full blur-3xl animate-pulse-soft"></div>
+  </div>
+
+<!-- حاوية التنبيهات -->
+<div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-4"></div>
+
 <!-- القسم الرئيسي للصفحة -->
 <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 min-h-screen">
     <div class="mx-auto max-w-[100%] px-2 lg:px-4">
@@ -90,7 +100,7 @@
                         <td class="px-4 py-3 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">{{ repair.id }}</td>
                         <td class="px-4 py-3">
                             <div class="flex items-center gap-3">
-                                <img class="w-10 h-10 rounded-lg object-cover" src="{{ url_for('static', filename=repair.device.image) if repair.device.image else url_for('static', filename='img/default_device.png') }}" alt="{{ repair.device.name }}">
+                                <img class="w-10 h-10 rounded-lg object-cover" src="{{ url_for('static', filename=repair.device.image) if repair.device.image else url_for('static', filename='uploads/devices/default_device.png') }}" alt="{{ repair.device.name }}">
                                 <div class="flex flex-col">
                                     <span class="font-medium text-gray-900 dark:text-white">{{ repair.device.name }}</span>
                                     <span class="text-xs text-blue-600 dark:text-blue-400">{{ repair.device.category }}</span>
@@ -99,7 +109,7 @@
                         </td>
                         <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{ repair.customer.name }}</td>
                         <td class="px-4 py-3 text-gray-500 dark:text-gray-400">{{ repair.customer.phone }}</td>
-                        <td class="px-4 py-3">{{ repair.issue_type.value }}</td>
+                        <td class="px-4 py-3">{{ repair.issue.title }}</td>
                         <td class="px-4 py-3 text-center">{{ repair.created_at.strftime('%Y-%m-%d') }}</td>
                         <td class="px-4 py-3 text-center">
                             <div class="flex justify-center">
@@ -123,6 +133,7 @@
                                             </a>
                                         </li>
                                         {% endfor %}
+                                    </div>
                                     </ul>
                                 </div>
                             </div>
@@ -223,23 +234,39 @@
             <!-- Modal body -->
             <form id="new-repair-form" action="{{ url_for('repair.add_repair') }}" method="POST" class="p-6 space-y-6">
                 <div class="grid gap-6 md:grid-cols-2">
-                    <!-- Customer Selection -->
-                    <div class="relative">
-                        <label for="customer_id" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-                            <span class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
-                                Customer <span class="text-red-500">*</span>
-                            </span>
-                        </label>
-                        <select name="customer_id" id="customer_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                            <option value="">Select a Customer</option>
-                            {% for customer in customers %}
-                            <option value="{{ customer.id }}">{{ customer.name }} - {{ customer.phone }}</option>
-                            {% endfor %}
-                        </select>
+            <!-- Customer Selection -->
+            <div class="relative">
+                <label for="customer_id" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <span class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        Customer <span class="text-red-500">*</span>
+                    </span>
+                </label>
+                <div class="flex gap-2">
+                    <div class="relative w-full">
+                        <input type="text" id="customer-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by customer name or phone..." autocomplete="off">
+                        <input type="hidden" name="customer_id" id="customer_id" required>
+                        <div id="customer-results" class="absolute z-10 w-full mt-1 bg-white rounded-lg shadow-lg dark:bg-gray-700 border border-gray-200 dark:border-gray-600 hidden">
+                            <div class="max-h-60 overflow-y-auto">
+                                {% for customer in customers %}
+                                <div class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer" data-value="{{ customer.id }}" data-phone="{{ customer.phone|default('') }}">
+                                    <div class="font-medium text-gray-900 dark:text-white">{{ customer.name }}</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">{{ customer.phone|default('') }}</div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
                     </div>
+                    <button type="button" data-modal-target="add-customer-modal" data-modal-toggle="add-customer-modal" class="inline-flex items-center justify-center p-2.5 text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 dark:from-blue-600 dark:to-purple-700 dark:hover:from-blue-700 dark:hover:to-purple-800 rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-md shadow-blue-500/30 dark:shadow-md dark:shadow-blue-800/30 transition-all duration-300">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"></path>
+                        </svg>
+                        <span class="sr-only">Add New Customer</span>
+                    </button>
+                </div>
+            </div>
                     <!-- Device Selection -->
                     <div class="relative">
                         <label for="device_id" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -250,16 +277,32 @@
                                 Device <span class="text-red-500">*</span>
                             </span>
                         </label>
-                        <select name="device_id" id="device_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                            <option value="">Select a Device</option>
-                            {% for device in devices %}
-                            <option value="{{ device.id }}">{{ device.name }} - {{ device.category }}</option>
-                            {% endfor %}
-                        </select>
+                        <div class="flex gap-2">
+                            <div class="relative w-full">
+                                <input type="text" id="device-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by device or brand..." autocomplete="off">
+                                <input type="hidden" name="device_id" id="device_id">
+                                <div id="device-results" class="absolute z-10 w-full mt-1 bg-white rounded-lg shadow-lg dark:bg-gray-700 border border-gray-200 dark:border-gray-600 hidden">
+                                    <div class="max-h-60 overflow-y-auto">
+                                        {% for device in devices %}
+                                    <div class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer" data-value="{{ device.id }}" data-brand="{{ device.brand|default('') }}" data-company="{{ device.company|default('') }}">
+                                        <div class="font-medium text-gray-900 dark:text-white">{{ device.name }}</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">{{ device.brand|default('') }} - {{ device.category }} - {{ device.company|default('') }}</div>
+                                    </div>
+                                    {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" data-modal-target="addDeviceModal" data-modal-toggle="addDeviceModal" class="inline-flex items-center justify-center p-2.5 text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 dark:from-blue-600 dark:to-purple-700 dark:hover:from-blue-700 dark:hover:to-purple-800 rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-md shadow-blue-500/30 dark:shadow-md dark:shadow-blue-800/30 transition-all duration-300">
+                                <svg class="w-5 h-5 text-white dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                </svg>
+                                <span class="sr-only">Add New Device</span>
+                            </button>
+                        </div>
                     </div>
                     <!-- Issue Type -->
                     <div class="relative">
-                        <label for="issue_type" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                        <label for="issue_id" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                             <span class="flex items-center gap-2">
                                 <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -267,10 +310,10 @@
                                 Issue Type <span class="text-red-500">*</span>
                             </span>
                         </label>
-                        <select name="issue_type" id="issue_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        <select name="issue_id" id="issue_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                             <option value="">Select Issue Type</option>
-                            {% for issue_type in issue_types %}
-                            <option value="{{ issue_type.value }}">{{ issue_type.name }}</option>
+                            {% for issue in issues %}
+                            <option value="{{ issue.id }}">{{ issue.title }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -302,8 +345,11 @@
                             </span>
                         </label>
                         <div class="flex">
-                            <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-                                SAR
+                            <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                                <svg class="w-5 h-5 text-gray-300 hover:text-yellow-300 peer-checked:text-yellow-300" viewBox="0 0 1124.14 1256.39" fill="currentColor">
+                                    <path d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"></path>
+                                <path d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"></path>
+                            </svg>
                             </span>
                             <input type="number" name="repair_price" id="repair_price" class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" min="0" step="0.01" required placeholder="0.00">
                         </div>
@@ -390,7 +436,7 @@
                                 Device <span class="text-red-500">*</span>
                             </span>
                         </label>
-                        <select name="device_id" id="edit_device_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        <selec  t name="device_id" id="edit_device_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                             <option value="">Select a Device</option>
                             {% for device in devices %}
                             <option value="{{ device.id }}">{{ device.name }} - {{ device.category }}</option>
@@ -399,7 +445,7 @@
                     </div>
                     <!-- Issue Type -->
                     <div class="relative">
-                        <label for="edit_issue_type" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                        <label for="edit_issue_id" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                             <span class="flex items-center gap-2">
                                 <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -407,10 +453,10 @@
                                 Issue Type <span class="text-red-500">*</span>
                             </span>
                         </label>
-                        <select name="issue_type" id="edit_issue_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        <select name="issue_id" id="edit_issue_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                             <option value="">Select Issue Type</option>
-                            {% for issue_type in issue_types %}
-                            <option value="{{ issue_type.value }}">{{ issue_type.name }}</option>
+                            {% for issue in issues %}
+                            <option value="{{ issue.id }}">{{ issue.title }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -527,7 +573,566 @@
 
 
 
-<!-- Include repair modals JavaScript -->
-<script src="{{ url_for('static', filename='js/repair_modals.js') }}"></script>
 
+<!--  نافذة اضافة عميل -->
+<div id="add-customer-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-0.5rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-4xl max-h-[90vh] mx-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-2xl shadow-xl dark:bg-gray-800 border border-gray-100 dark:border-gray-700 transition-all duration-300">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-5 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r white dark:from-gray-800 dark:to-gray-800 rounded-t-2xl">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+                    <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                        <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </div>
+                    <span>Add New Customer</span>
+                </h3>
+                <button type="button" class="text-gray-400 hover:text-gray-900 dark:hover:text-white bg-transparent hover:bg-gray-100 dark:hover:bg-gray-600 rounded-full w-9 h-9 flex items-center justify-center transition-colors duration-200" data-modal-hide="add-customer-modal">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+             <!-- جسم النافذة -->
+             <form id="add-customer-form" class="p-4 md:p-5" enctype="multipart/form-data">
+                 <div class="grid gap-4 mb-4 grid-cols-2">
+                     <!-- صورة العميل -->
+                     <div class="col-span-2">
+                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Profile Picture</label>
+                         <div class="flex items-center space-x-4">
+                            <div class="relative w-16 h-16">
+                                <div class="relative w-16 h-16 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 ring-4 ring-gray-100 dark:ring-gray-700 transition-all duration-300 hover:ring-blue-100 dark:hover:ring-blue-900/30 group">
+                                    <img id="customer-preview" class="absolute w-full h-full object-cover hidden transition-opacity duration-300" src="#" alt="Preview">
+
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 rounded-full"></div>           
+                                    <img id="default-icon" class="absolute w-full h-full object-cover" src="{{ url_for('static', filename='uploads/customers/default_profile.png') }}" alt="Default profile picture">
+                                </div>
+                                <button type="button" id="preview-remove-btn" onclick="removeImage()" class="absolute bottom-0 right-2 hidden p--1 bg-red-500 rounded-full text-white hover:bg-red-600 transition-all duration-300 transform hover:scale-110 shadow-sm">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <label class="relative inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-600/10 hover:from-blue-500/20 hover:to-purple-600/20 dark:from-blue-600/20 dark:to-purple-700/20 dark:hover:from-blue-600/30 dark:hover:to-purple-700/30 cursor-pointer transition-all duration-300 group">
+                                    <input type="file" id="customer-image" class="hidden" accept="image/*" onchange="previewImage(this)">
+                                    <svg class="w-6 h-6 text-blue-600 dark:text-blue-400 transition-transform duration-300 transform group-hover:scale-110 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                    </svg>
+                                </label>
+                                <button type="button" id="remove-image" onclick="removeImage()" class="hidden">
+                                </button>
+                            </div>
+                         </div>
+                     </div>
+                     <script>
+                        function previewImage(input) {
+                            const preview = document.getElementById('customer-preview');
+                            const defaultIcon = document.getElementById('default-icon');
+                            const previewRemoveBtn = document.getElementById('preview-remove-btn');
+                        
+                            if (input.files && input.files[0]) {
+                                const reader = new FileReader();
+                        
+                                reader.onload = function(e) {
+                                    preview.src = e.target.result;
+                                    preview.classList.remove('hidden');
+                                    defaultIcon.classList.add('hidden');
+                                    // إظهار زر الإلغاء عند وجود صورة
+                                    previewRemoveBtn.classList.remove('hidden');
+                                }
+                        
+                                reader.readAsDataURL(input.files[0]);
+                            }
+                        }
+                        
+                        function removeImage() {
+                            const preview = document.getElementById('customer-preview');
+                            const defaultIcon = document.getElementById('default-icon');
+                            const previewRemoveBtn = document.getElementById('preview-remove-btn');
+                            const input = document.getElementById('customer-image');
+                        
+                            preview.src = '#';
+                            preview.classList.add('hidden');
+                            defaultIcon.classList.remove('hidden');
+                            // إخفاء زر الإلغاء
+                            previewRemoveBtn.classList.add('hidden');
+                            input.value = '';
+                        }
+                        </script>
+                     <!-- اسم العميل -->
+                     <div class="col-span-2">
+                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                             <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                             </svg>
+                             Customer Name <span class="text-red-500">*</span>
+                         </label>
+                         <input type="text" name="name" id="name" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 transition-all duration-300 hover:border-primary-400 dark:hover:border-primary-400" placeholder="Type customer name" required>
+                     </div>
+                     <!-- مكان العمل -->
+                     <div class="col-span-2">
+                         <label for="workplace" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                             <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                             </svg>
+                             Workplace
+                         </label>
+                         <input type="text" name="workplace" id="workplace" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 transition-all duration-300 hover:border-primary-400 dark:hover:border-primary-400" placeholder="Enter workplace">
+                     </div>
+                     <!-- معلومات الاتصال -->
+                     <div class="col-span-2 sm:col-span-1">
+                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                             <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                             </svg>
+                             Email
+                         </label>
+                         <input type="email" name="email" id="email" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 transition-all duration-300 hover:border-primary-400 dark:hover:border-primary-400" placeholder="example@company.com">
+                     </div>
+                     <div class="col-span-2 sm:col-span-1">
+                         <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                             <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                             </svg>
+                             Phone <span class="text-red-500">*</span>
+                         </label>
+                         <input type="tel" name="phone" id="phone" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 transition-all duration-300 hover:border-primary-400 dark:hover:border-primary-400" placeholder="056 568 588" required>
+                     </div>
+                     <!-- الحالة -->
+                     <div class="col-span-2 sm:col-span-1">
+                         <label for="status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                             <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                             </svg>
+                             Status
+                         </label>
+                         <select id="status" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 transition-all duration-300 hover:border-primary-400 dark:hover:border-primary-400">
+                             <option value="" selected>Select status</option>
+                             <option value="active">Active</option>
+                             <option value="inactive">Inactive</option>
+                             <option value="suspended">Suspended</option>
+                         </select>
+                     </div>
+                     <!-- التقييم -->
+                     <div class="col-span-2 sm:col-span-1">
+                         <label for="rating" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                             <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                             </svg>
+                             Rating
+                         </label>
+                         <div class="">
+                             <div class="star-rating flex items-center">
+                                 <input type="radio" id="star5" name="rating" value="1" class="hidden"/>
+                                 <label for="star5" class="cursor-pointer p-1">
+                                     <svg class="w-5 h-5 text-gray-300 hover:text-yellow-300 peer-checked:text-yellow-300" fill="currentColor" viewBox="0 0 22 20">
+                                         <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                                     </svg>
+                                 </label>
+                                 <input type="radio" id="star4" name="rating" value="2" class="hidden"/>
+                                 <label for="star4" class="cursor-pointer p-1">
+                                     <svg class="w-5 h-5 text-gray-300 hover:text-yellow-300 peer-checked:text-yellow-300" fill="currentColor" viewBox="0 0 22 20">
+                                         <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                                     </svg>
+                                 </label>
+                                 <input type="radio" id="star3" name="rating" value="3" class="hidden"/>
+                                 <label for="star3" class="cursor-pointer p-1">
+                                     <svg class="w-5 h-5 text-gray-300 hover:text-yellow-300 peer-checked:text-yellow-300" fill="currentColor" viewBox="0 0 22 20">
+                                         <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                                     </svg>
+                                 </label>
+                                 <input type="radio" id="star2" name="rating" value="4" class="hidden"/>
+                                 <label for="star2" class="cursor-pointer p-1">
+                                     <svg class="w-5 h-5 text-gray-300 hover:text-yellow-300 peer-checked:text-yellow-300" fill="currentColor" viewBox="0 0 22 20">
+                                         <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                                     </svg>
+                                 </label>
+                                 <input type="radio" id="star1" name="rating" value="5" class="hidden"/>
+                                 <label for="star1" class="cursor-pointer p-1">
+                                     <svg class="w-5 h-5 text-gray-300 hover:text-yellow-300 peer-checked:text-yellow-300" fill="currentColor" viewBox="0 0 22 20">
+                                         <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                                     </svg>
+                                 </label>
+                             </div>
+                         </div>
+                     </div>
+                     <!-- تاريخ الانضمام -->
+                     <div class="col-span-2 sm:col-span-1">
+                         <label for="join_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                             <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                             </svg>
+                             Join Date <span class="text-red-500">*</span>
+                         </label>
+                         <div class="relative max-w-sm">
+                             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                 <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                 </svg>
+                             </div>
+                             <input datepicker datepicker-format="dd-mm-yyyy" datepicker-buttons datepicker-max="today" type="text" id="join_date" name="join_date" 
+                                 class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 transition-all duration-300 hover:border-primary-400 dark:hover:border-primary-400" 
+                                 placeholder="Select date" readonly required>
+                         </div>
+                     </div>
+
+                     <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const datepickerEl = document.getElementById('join_date');
+                            new Datepicker(datepickerEl, {
+                                format: 'dd-mm-yyyy',
+                                autohide: true,
+                                todayBtn: true,
+                                clearBtn: true,
+                                todayHighlight: true
+                            });
+                        });
+                     </script>
+                     <!-- مبلغ الدين -->
+                     <div class="col-span-2 sm:col-span-1">
+                         <label for="debt_amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                             <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                             </svg>
+                             Debt Amount
+                         </label>
+                         <div class="flex">
+                            <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                                <svg class="w-5 h-5 text-gray-300 hover:text-yellow-300 peer-checked:text-yellow-300" viewBox="0 0 1124.14 1256.39" fill="currentColor">
+                                    <path d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"></path>
+                                <path d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"></path>
+                            </svg>
+                            </span>
+                            <input type="number" name="debt_amount" id="debt_amount" class="rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0.00" min="0" step="0.01">
+                        </div>
+                    </div>
+                     <!-- الملاحظات -->
+                     <div class="col-span-2">
+                         <label for="notes" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                             <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                             </svg>
+                             Notes
+                         </label>
+                         <textarea id="notes" name="notes" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 transition-all duration-300 hover:border-primary-400 dark:hover:border-primary-400" placeholder="Add any additional notes here..."></textarea>
+                     </div>
+                 </div>
+                 <!-- تذييل النافذة -->
+                <div class="flex items-center justify-end gap-3 p-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-b-2xl">
+                    <button type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" data-modal-hide="add-customer-modal">
+                        Cancel
+                    </button>
+                    <button type="submit" class="text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 flex items-center gap-2 dark:focus:ring-blue-800 shadow-md shadow-blue-500/20 dark:shadow-lg dark:shadow-blue-800/30 transition-all duration-300">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Add Customer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Include repair modals JavaScript -->
+<script src="{{ url_for('static', filename='js/smartphone_repair/repair_modals.js') }}"></script>
+
+
+<!-- new customer modals JavaScript -->
+<script>
+    // نموذج إضافة عميل جديد
+    document.getElementById('add-customer-form')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        
+        // إضافة الصورة إلى FormData إذا تم اختيارها
+        const imageInput = document.getElementById('customer-image');
+        if (imageInput.files && imageInput.files[0]) {
+            formData.append('customer-image', imageInput.files[0]);
+        }
+        
+        fetch("{{ url_for('customer.add_customer') }}", {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (!data) {
+                throw new Error('No data received');
+            }
+
+            // Ensure toast container exists
+            let toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) {
+                toastContainer = document.createElement('div');
+                toastContainer.id = 'toast-container';
+                toastContainer.className = 'fixed bottom-4 right-4 z-50 space-y-4';
+                document.body.appendChild(toastContainer);
+            }
+
+            const toastContent = `
+                <div class="flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+                    <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 ${
+                        data.success ? 'text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-200'
+                                   : 'text-red-500 bg-red-100 dark:bg-red-800 dark:text-red-200'
+                    } rounded-lg">
+                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="${
+                                data.success ? 'M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z'
+                                       : 'M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z'
+                            }"/>
+                        </svg>
+                    </div>
+                    <div class="ms-3 text-sm font-normal">${data.message}</div>
+                    <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast" aria-label="Close">
+                        <span class="sr-only">Close</span>
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                    </button>
+                </div>
+            `;
+
+            toastContainer.innerHTML = toastContent;
+
+            // Close modal if success
+            if (data.success) {
+                const modal = document.getElementById('add-customer-modal');
+                modal?.classList.add('hidden');
+                
+                // تحديث قائمة العملاء بعد الإضافة
+                // استدعاء دالة تحديث قائمة العملاء مع تمرير معرف العميل الجديد
+                fetchAndUpdateCustomersList(data.customer?.id);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            
+            // Show error message
+            const toastContainer = document.getElementById('toast-container') || document.createElement('div');
+            toastContainer.id = 'toast-container';
+            toastContainer.className = 'fixed bottom-4 right-4 z-50 space-y-4';
+            document.body.appendChild(toastContainer);
+            
+            toastContainer.innerHTML = `
+                <div class="flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+                    <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>
+                        </svg>
+                    </div>
+                    <div class="ms-3 text-sm font-normal">حدث خطأ أثناء إضافة العميل. يرجى المحاولة مرة أخرى.</div>
+                    <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-error" aria-label="Close">
+                        <span class="sr-only">Close</span>
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                    </button>
+                </div>
+            `;
+        });
+    });
+
+
+// دالة لتحديث قائمة العملاء من الخادم
+function fetchAndUpdateCustomersList(selectedCustomerId = null) {
+        fetch("{{ url_for('customer.get_customers_json') }}", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (!data || !data.customers) {
+                throw new Error('No customers data received');
+            }
+
+            // Update both Add and Edit Repair Modals
+            ['customer-results', 'edit_customer-results'].forEach(containerId => {
+                const resultsContainer = document.getElementById(containerId);
+                if (resultsContainer) {
+                    const resultsDiv = resultsContainer.querySelector('.max-h-60');
+                    resultsDiv.innerHTML = ''; // Clear existing options
+
+                    // Add new customer options
+                    data.customers.forEach(customer => {
+                        const div = document.createElement('div');
+                        div.className = 'px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer';
+                        div.setAttribute('data-value', customer.id);
+                        div.setAttribute('data-phone', customer.phone || '');
+                        div.innerHTML = `
+                            <div class="font-medium text-gray-900 dark:text-white">${customer.name}</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">${customer.phone || ''}</div>
+                        `;
+                        resultsDiv.appendChild(div);
+                    });
+
+                    // Reinitialize search functionality for this container
+                    const searchInputId = containerId === 'customer-results' ? 'customer-search' : 'edit_customer-search';
+                    const customerIdInputId = containerId === 'customer-results' ? 'customer_id' : 'edit_customer_id';
+                    initializeCustomerSearch(searchInputId, containerId, customerIdInputId);
+
+                    // If a new customer was added, set it as selected
+                    if (selectedCustomerId) {
+                        const selectedItem = resultsDiv.querySelector(`div[data-value="${selectedCustomerId}"]`);
+                        if (selectedItem) {
+                            const searchInput = document.getElementById(searchInputId);
+                            const customerIdInput = document.getElementById(customerIdInputId);
+                            searchInput.value = selectedItem.querySelector('div:first-child').textContent;
+                            customerIdInput.value = selectedCustomerId;
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching customers:', error);
+        });
+    }
+
+</script>
+
+<!-- JavaScript CustomerSearchHandler -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to initialize customer search for a given modal
+        function initializeCustomerSearch(searchInputId, resultsContainerId, customerIdInputId) {
+            const searchInput = document.getElementById(searchInputId);
+            const resultsContainer = document.getElementById(resultsContainerId);
+            const customerIdInput = document.getElementById(customerIdInputId);
+
+            // Initially show first 9 customers
+            const allItems = resultsContainer.querySelectorAll('div[data-value]');
+            allItems.forEach((item, index) => {
+                item.style.display = index < 9 ? 'block' : 'none';
+            });
+
+            // Handle search input
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                let visibleCount = 0;
+
+                allItems.forEach(item => {
+                    const customerName = item.querySelector('div:first-child').textContent.toLowerCase();
+                    const phone = item.getAttribute('data-phone').toLowerCase();
+
+                    const isMatch = customerName.includes(query) || phone.includes(query);
+
+                    if (isMatch && visibleCount < 9) {
+                        item.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                if (visibleCount > 0 && query.length > 0) {
+                    resultsContainer.classList.remove('hidden');
+                } else {
+                    resultsContainer.classList.add('hidden');
+                }
+            });
+
+            // Handle selection
+            resultsContainer.addEventListener('click', function(e) {
+                const item = e.target.closest('div[data-value]');
+                if (item) {
+                    customerIdInput.value = item.getAttribute('data-value');
+                    searchInput.value = item.querySelector('div:first-child').textContent;
+                    resultsContainer.classList.add('hidden');
+                }
+            });
+
+            // Hide results when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!resultsContainer.contains(e.target) && e.target !== searchInput) {
+                    resultsContainer.classList.add('hidden');
+                }
+            });
+        }
+
+        // Initialize for Add Repair Modal
+        initializeCustomerSearch('customer-search', 'customer-results', 'customer_id');
+
+        // Initialize for Edit Repair Modal
+        initializeCustomerSearch('edit_customer-search', 'edit_customer-results', 'edit_customer_id');
+    });
+</script>
+
+<!-- JavaScript DeviceSearchHandler -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('device-search');
+        const resultsContainer = document.getElementById('device-results');
+        const deviceIdInput = document.getElementById('device_id');
+        
+        // Initially show first 9 devices
+        const allItems = resultsContainer.querySelectorAll('div[data-value]');
+        allItems.forEach((item, index) => {
+            item.style.display = index < 9 ? 'block' : 'none';
+        });
+        
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            let visibleCount = 0;
+            
+            allItems.forEach(item => {
+                const deviceName = item.querySelector('div:first-child').textContent.toLowerCase();
+                const brand = item.getAttribute('data-brand').toLowerCase();
+                const company = item.getAttribute('data-company').toLowerCase();
+                
+                const isMatch = deviceName.includes(query) || brand.includes(query) || company.includes(query);
+                
+                if (isMatch && visibleCount < 9) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            if (visibleCount > 0 && query.length > 0) {
+                resultsContainer.classList.remove('hidden');
+            } else {
+                resultsContainer.classList.add('hidden');
+            }
+        });
+        
+        resultsContainer.addEventListener('click', function(e) {
+            const item = e.target.closest('div[data-value]');
+            if (item) {
+                deviceIdInput.value = item.getAttribute('data-value');
+                searchInput.value = item.querySelector('div:first-child').textContent;
+                resultsContainer.classList.add('hidden');
+            }
+        });
+        
+        document.addEventListener('click', function(e) {
+            if (!resultsContainer.contains(e.target) && e.target !== searchInput) {
+                resultsContainer.classList.add('hidden');
+            }
+        });
+    });
+</script>
 {% endblock %}

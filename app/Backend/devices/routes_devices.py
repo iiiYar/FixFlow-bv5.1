@@ -43,7 +43,7 @@ def add_device():
             
             # Handle file upload
             image_file = request.files.get('image')
-            image_filename = 'default_device.png'
+            image_filename = 'uploads/default/default_device.png'
             
             if image_file and image_file.filename != '':
                 # Generate a unique filename
@@ -66,7 +66,7 @@ def add_device():
                 company=company,
                 category=category,
                 model=model,
-                image=image_filename
+                image=image_filename or 'default_device.png'
             )
             
             # Add to database
@@ -106,13 +106,20 @@ def edit_device(device_id):
             device.model = request.form.get('model')
             
             image_file = request.files.get('image')
-            if image_file and image_file.filename != '':
+            remove_image = request.form.get('remove_image') == 'true'
+            
+            if remove_image and not image_file:
+                # User wants to remove the current image and revert to default
+                device.image = 'Uploads/default/default_device.png'
+            elif image_file and image_file.filename != '':
+                # User uploaded a new image
                 filename = secure_filename(f"{device.name}_{device.model}_{uuid.uuid4().hex[:8]}{os.path.splitext(image_file.filename)[1]}")
-                upload_dir = os.path.join(current_app.root_path, 'static', 'uploads', 'devices')
+                upload_dir = os.path.join(current_app.root_path, 'static', 'Uploads', 'devices')
                 os.makedirs(upload_dir, exist_ok=True)
                 file_path = os.path.join(upload_dir, filename)
                 image_file.save(file_path)
-                device.image = f'uploads/devices/{filename}'
+                device.image = f'Uploads/devices/{filename}'
+            # If neither remove_image nor a new image is provided, keep the existing image
             
             db.session.commit()
             return jsonify({'success': True, 'message': 'تم تعديل الجهاز بنجاح'})
@@ -149,9 +156,58 @@ def get_devices():
             'company': device.company,
             'category': device.category,
             'model': device.model,
-            'image': device.image or 'default_image.png'
+            'image': device.image or 'Uploads/default/default_device.png'
         } for device in devices]
         return jsonify(devices_list), 200
     except Exception as e:
         current_app.logger.error(f'خطأ في جلب الأجهزة: {str(e)}')
         return jsonify({'error': 'حدث خطأ في جلب الأجهزة'}), 500
+
+@devices.route('/import_devices', methods=['POST'])
+def import_devices():
+    try:
+        data = request.get_json()
+        if not data or 'devices' not in data:
+            return jsonify({'success': False, 'error': 'لا توجد بيانات للاستيراد'}), 400
+
+        required_fields = ['name', 'company', 'category', 'model']
+        valid_categories = [
+            'Smartphones', 'Tablets', 'Laptops', 'Desktop Computers', 'Printers',
+            'Networking Equipment', 'Gaming Consoles', 'Smart Watches', 'Audio Devices', 'Other'
+        ]
+
+        for item in data['devices']:
+            # Validate required fields
+            if not all(key in item for key in required_fields):
+                continue
+
+            # Validate category
+            if item['category'] not in valid_categories:
+                item['category'] = 'Other'
+
+            # Sanitize input
+            item['name'] = item['name'].strip()[:100]
+            item['company'] = item['company'].strip()[:100]
+            item['model'] = item['model'].strip()[:100]
+
+            # Check for existing device
+            existing_device = Devices.query.filter_by(name=item['name'], model=item['model']).first()
+            if existing_device:
+                existing_device.company = item['company']
+                existing_device.category = item['category']
+            else:
+                device = Devices(
+                    name=item['name'],
+                    company=item['company'],
+                    category=item['category'],
+                    model=item['model'],
+                    image='Uploads/default/default_device.png'
+                )
+                db.session.add(device)
+
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'تم استيراد الأجهزة بنجاح'})
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.error(f'خطأ في استيراد الأجهزة: {str(e)}')
+        return jsonify({'success': False, 'error': f'خطأ في استيراد الأجهزة: {str(e)}'}), 500

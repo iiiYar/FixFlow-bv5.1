@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, current_app
 from app import db
-from .repair_models import RepairRequest, RepairStatus, IssueType
+from .repair_models import RepairRequest, RepairStatus
 from app.Backend.customers.model_customers import Customer
 from app.Backend.devices.devices_models import Devices
+from app.Backend.issues.issues_models import Issue
 from datetime import datetime
 
 repair = Blueprint('repair', __name__)
@@ -12,7 +13,8 @@ def smartphone_repair():
     repairs = RepairRequest.query.all()
     customers = Customer.query.all()
     devices = Devices.query.all()
-    return render_template('smartphone_repair.html', repairs=repairs, customers=customers, devices=devices, issue_types=IssueType)
+    issues = Issue.query.all()
+    return render_template('smartphone_repair.html', repairs=repairs, customers=customers, devices=devices, issues=issues)
 
 
 @repair.route('/repairs')
@@ -27,7 +29,7 @@ def add_repair():
             # Get form data
             device_id = request.form.get('device_id')
             customer_id = request.form.get('customer_id')
-            issue_type = request.form.get('issue_type')
+            issue_id = request.form.get('issue_id')
             repair_price = request.form.get('repair_price')
             notes = request.form.get('notes')
 
@@ -35,7 +37,7 @@ def add_repair():
             repair_request = RepairRequest(
                 device_id=device_id,
                 customer_id=customer_id,
-                issue_type=IssueType(issue_type),
+                issue_id=issue_id,
                 repair_price=repair_price,
                 notes=notes,
                 status=RepairStatus.PENDING
@@ -76,7 +78,7 @@ def edit_repair(repair_id):
                 'repair': {
                     'customer_id': repair_request.customer_id,
                     'device_id': repair_request.device_id,
-                    'issue_type': repair_request.issue_type.value,
+                    'issue': {'id': repair_request.issue.id, 'title': repair_request.issue.title},
                     'repair_price': str(repair_request.repair_price),
                     'notes': repair_request.notes or '',
                     'status': repair_request.status.value
@@ -87,7 +89,7 @@ def edit_repair(repair_id):
             # Update repair request details
             repair_request.device_id = request.form.get('device_id')
             repair_request.customer_id = request.form.get('customer_id')
-            repair_request.issue_type = IssueType(request.form.get('issue_type'))
+            repair_request.issue_id = request.form.get('issue_id')
             repair_request.repair_price = request.form.get('repair_price')
             repair_request.notes = request.form.get('notes')
             repair_request.status = RepairStatus(request.form.get('status'))
@@ -131,7 +133,7 @@ def get_repair_details(repair_id):
                 'customer_name': customer.name if customer else 'Unknown',
                 'device_name': device.name if device else 'Unknown',
                 'device_category': device.category if device else 'Unknown',
-                'issue_type': repair_request.issue_type.value,
+                'issue': {'id': repair_request.issue.id, 'title': repair_request.issue.title},
                 'repair_price': str(repair_request.repair_price),
                 'status': repair_request.status.value,
                 'created_at': repair_request.created_at.strftime('%Y-%m-%d') if repair_request.created_at else 'Unknown'

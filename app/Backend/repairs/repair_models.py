@@ -2,6 +2,7 @@ from datetime import datetime
 from app import db
 from enum import Enum
 from app.Backend.customers.model_customers import Customer
+from app.Backend.issues.issues_models import Issue
 
 class RepairStatus(Enum):
     IN_PROGRESS = "In Progress"
@@ -13,14 +14,6 @@ class DeviceType(Enum):
     TABLET = "tablet"
     LAPTOP = "laptop"
     DESKTOP = "desktop"
-    OTHER = "other"
-
-class IssueType(Enum):
-    SCREEN_REPLACEMENT = "screen_replacement"
-    BATTERY_REPAIR = "battery_repair"
-    SOFTWARE_ISSUE = "software_issue"
-    WATER_DAMAGE = "water_damage"
-    CHARGING_PORT = "charging_port"
     OTHER = "other"
 
 class RepairRequest(db.Model):
@@ -40,7 +33,10 @@ class RepairRequest(db.Model):
     customer_mobile = db.Column(db.String(20))  # Will be populated from customer relationship
     
     # Repair Details
-    issue_type = db.Column(db.Enum(IssueType), nullable=False)
+    issue_id = db.Column(db.Integer, db.ForeignKey('issues.id'), nullable=False)
+    issue = db.relationship('Issue', lazy='joined')
+
+
     repair_price = db.Column(db.Numeric(10, 2), nullable=False)  # Price in SAR with 2 decimal places
     notes = db.Column(db.Text, nullable=True)  # Optional repair notes
     status = db.Column(db.Enum(RepairStatus), default=RepairStatus.PENDING)

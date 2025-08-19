@@ -1,8 +1,8 @@
 <aside
-class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-all duration-300 ease-in-out -translate-x-full bg-white border-r border-gray-200 shadow-lg md:translate-x-0 dark:bg-gray-800 dark:border-gray-700 hover:shadow-xl"
-aria-label="Sidenav"
-id="drawer-navigation"
->
+  class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-all duration-300 ease-in-out -translate-x-full bg-white border-r border-gray-200 shadow-lg md:translate-x-0 dark:bg-gray-800 dark:border-gray-700 hover:shadow-xl"
+  aria-label="Sidenav"
+  id="drawer-navigation"
+  >
 <div class="overflow-y-auto py-6 px-4 h-full bg-white dark:bg-gray-800">
   <form action="#" method="GET" class="md:hidden mb-2">
     <label for="sidebar-search" class="sr-only">Search</label>
@@ -41,16 +41,6 @@ id="drawer-navigation"
           </div>
           <span class="ms-3 font-medium">Dashboard</span>
       </a>
-    </li>
-    
-    <!-- Customers Button -->
-    <li>
-        <a href="{{ url_for('customer.customers') }}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
-                <i class="fas fa-users text-green-500"></i>
-            </div>
-            <span class="ms-3 font-medium">Customers</span>
-        </a>
     </li>
     <!-- Sales Dropdown Menu -->
     <li>
@@ -112,22 +102,19 @@ id="drawer-navigation"
           </a>
         </li>
       </ul>
-    </li>
-    
-    <!-- Filling forms section -->
+
+    <!-- Customers Dropdown Menu -->
     <li>
       <button
         type="button"
         class="flex items-center p-2 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-        aria-controls="dropdown-filling-forms"
-        data-collapse-toggle="dropdown-filling-forms"
+        aria-controls="dropdown-customers"
+        data-collapse-toggle="dropdown-customers"
       >
         <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
-          <svg class="w-5 h-5 text-teal-500 dark:text-teal-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5v2h6V5m-4 7c0-1.1.9-2 2-2 1.1 0 2 .9 2 2v3c0 1.1-.9 2-2 2-1.1 0-2-.9-2-2v-3Z"/>
-          </svg>
+          <i class="fas fa-users text-green-500"></i>
         </div>
-        <span class="flex-1 ms-3 font-medium text-left">Filling forms</span>
+        <span class="flex-1 ms-3 font-medium text-left">Customers</span>
         <svg
           class="w-3 h-3 transition-transform duration-300"
           aria-hidden="true"
@@ -144,22 +131,186 @@ id="drawer-navigation"
           />
         </svg>
       </button>
-      <ul id="dropdown-filling-forms" class="hidden py-2 space-y-2 transition-all duration-300 ease-in-out transform origin-top">
+      <ul id="dropdown-customers" class="py-2 space-y-2 transition-all duration-300 ease-in-out transform origin-top">
         <li>
-            <a href="{{ url_for('devices.list_devices') }}" class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-              <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
-                <svg class="w-5 h-5 text-indigo-500 dark:text-indigo-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6h-2m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4"/>
-                </svg>
-              </div>
-              <span class="ms-3 font-medium">Devices</span>
-            </a>
+          <a
+            href="{{ url_for('customer.add_customer_page') }}"
+            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            style="padding-left: 17px;"
+          >
+            <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+              <i class="fas fa-user-plus text-green-500"></i>
+            </div>
+            <span class="ms-3 font-medium">Add Customer</span>
+          </a>
         </li>
-    </ul>
-  </li>
-  <ul
+        <li>
+          <a
+            href="{{ url_for('customer.customers') }}"
+            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            style="padding-left: 17px;"
+          >
+            <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+              <i class="fas fa-users text-green-500"></i>
+            </div>
+            <span class="ms-3 font-medium">Customer List</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    
+    <!-- Devices Dropdown Menu -->
+    <li>
+      <button
+        type="button"
+        class="flex items-center p-2 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        aria-controls="dropdown-devices"
+        data-collapse-toggle="dropdown-devices"
+      >
+        <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+          <i class="ph ph-devices text-indigo-500 dark:text-indigo-400 text-xl"></i>
+        </div>
+        <span class="flex-1 ms-3 font-medium text-left">Devices</span>
+        <svg
+          class="w-3 h-3 transition-transform duration-300"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 10 6"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 4 4 4-4"
+          />
+        </svg>
+      </button>
+      <ul id="dropdown-devices" class="py-2 space-y-2 transition-all duration-300 ease-in-out transform origin-top">
+        <!-- Add Device -->
+        <li>
+          <a
+            href="#"
+            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            style="padding-left: 17px;"
+          >
+            <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+              <i class="ph ph-plus-circle text-green-500 dark:text-green-400 text-xl"></i>
+            </div>
+            <span class="ms-3 font-medium">Add Device</span>
+          </a>
+        </li>
+
+        <!-- Device List -->
+        <li>
+          <a
+            href="{{ url_for('devices.list_devices') }}"
+            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            style="padding-left: 17px;"
+          >
+            <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+              <i class="ph ph-list text-orange-500 dark:text-orange-400 text-xl"></i>
+            </div>
+            <span class="ms-3 font-medium">Device List</span>
+          </a>
+        </li>
+        
+        <!-- Issues / Problems -->
+        <li>
+          <a
+            href="{{ url_for('issues.list_issues') }}"
+            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            style="padding-left: 17px;"
+          >
+            <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+              <i class="ph ph-warning-circle text-red-500 dark:text-red-400 text-xl"></i>
+            </div>
+            <span class="ms-3 font-medium">IssuesProblems</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    
+    <!-- Invoices Dropdown Menu -->
+    <li>
+      <button
+        type="button"
+        class="flex items-center p-2 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        aria-controls="dropdown-invoices"
+        data-collapse-toggle="dropdown-invoices"
+      >
+        <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+          <i class="ph ph-file-text text-rose-500 dark:text-rose-400 text-xl"></i>
+        </div>
+        <span class="flex-1 ms-3 font-medium text-left">Invoices</span>
+        <svg
+          class="w-3 h-3 transition-transform duration-300"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 10 6"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 4 4 4-4"
+          />
+        </svg>
+      </button>
+      <ul id="dropdown-invoices" class="py-2 space-y-2 transition-all duration-300 ease-in-out transform origin-top">
+        <!-- Add Invoice -->
+        <li>
+          <a
+            href="{{ url_for('sales.new_invoice') }}"
+            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            style="padding-left: 17px;"
+          >
+            <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+              <i class="ph ph-file-plus text-teal-500 dark:text-teal-400 text-xl"></i>
+            </div>
+            <span class="ms-3 font-medium">Add Invoice</span>
+          </a>
+        </li>
+
+        <!-- Invoice List -->
+        <li>
+          <a
+            href="#"
+            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            style="padding-left: 17px;"
+          >
+            <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+              <i class="ph ph-list text-orange-500 dark:text-orange-400 text-xl"></i>
+            </div>
+            <span class="ms-3 font-medium">Invoice List</span>
+          </a>
+        </li>
+
+        <!-- Invoice Management -->
+        <li>
+          <a
+            href="#"
+            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            style="padding-left: 17px;"
+          >
+            <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
+              <i class="ph ph-gear-six text-emerald-500 dark:text-emerald-400 text-xl"></i>
+            </div>
+            <span class="ms-3 font-medium">Invoice Management</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    
+
+      <ul
     class="pt-6 mt-6 space-y-3 border-t border-gray-200 dark:border-gray-700"
   >
+
+    
     <!-- Help Button -->
     <li>
       <a
@@ -167,15 +318,15 @@ id="drawer-navigation"
         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
       >
         <div class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-200">
-          <svg class="w-5 h-5 text-amber-500 dark:text-amber-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a9 9 0 0 0 9-9m-9 9a9 9 0 0 1-9-9m9 9v-3m0-13v3m11 0h-3m-16 0h3"/>
-          </svg>
+          <i class="ph ph-question text-cyan-500 dark:text-cyan-400 text-xl"></i>
         </div>
         <span class="ms-3 font-medium">Help</span>
       </a>
     </li>
   </ul>
 </div>
+
+
 <!-- Bottom Settings Bar -->
 <div
   class="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-white dark:bg-gray-800 z-20 border-t border-gray-200 dark:border-gray-700"
@@ -187,7 +338,7 @@ id="drawer-navigation"
     <div class="w-8 h-8 flex items-center justify-center">
       <svg
         aria-hidden="true"
-        class="w-5 h-5 text-cyan-500 dark:text-cyan-400"
+        class="w-5 h-5 text-gray-500 dark:text-gray-400"
         fill="currentColor"
         viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg"
@@ -206,7 +357,7 @@ id="drawer-navigation"
     <div class="w-8 h-8 flex items-center justify-center">
       <svg
         aria-hidden="true"
-        class="w-5 h-5 text-pink-500 dark:text-pink-400"
+        class="w-5 h-5 text-gray-500 dark:text-gray-400"
         fill="currentColor"
         viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg"
