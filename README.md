@@ -10,7 +10,7 @@
   [![Flask](https://img.shields.io/badge/flask-2.0+-green.svg)](https://flask.palletsprojects.com)
   [![Tailwind CSS](https://img.shields.io/badge/tailwind-3.4+-blue.svg)](https://tailwindcss.com)
   [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/yourusername/fixflow/pulls)
-  [![Stars](https://img.shields.io/github/stars/yourusername/fixflow?style=social)](https://github.com/iiiYar/FixFlow-bv5.1)
+  [![Stars](https://img.shields.io/github/stars/iiiYar/FixFlow-bv5.1?style=social)](https://github.com/iiiYar/FixFlow-bv5.1)
   
   <strong>⚠️ IMPORTANT NOTICE: This project is currently under development and not yet complete</strong>
 
