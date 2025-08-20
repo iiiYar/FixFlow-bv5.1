@@ -1,7 +1,6 @@
 <div align="center">
   <img src="./docs/images/logo.png" alt="FixFlow Logo" width="200">
   <h1>FixFlow</h1>
-  **Version**: v5.1 Beta | **Status**: In Development | **Last Updated**: 2024
   <p><em>Smart Phone Repair Shop Management System</em></p>
   
   [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -13,7 +12,7 @@
   
   <strong>⚠️ IMPORTANT NOTICE: This project is currently under development and not yet complete</strong>
 </div>
-
+**Version**: v5.1 Beta | **Status**: In Development | **Last Updated**: 2024
 ---
 
 ## 🎯 Overview
