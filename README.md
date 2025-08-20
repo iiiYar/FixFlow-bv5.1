@@ -16,7 +16,6 @@
 
 </div>
 
-**Version**: v5.1 Beta | **Status**: In Development | **Last Updated**: 2024
 
 ---
 
