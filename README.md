@@ -79,7 +79,6 @@
 
 ## 📱 Features & Pages
 
-![Features Overview](./docs/images/features-overview.png)
 
 ### ✅ Completed Features
 
