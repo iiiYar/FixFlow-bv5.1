@@ -475,7 +475,7 @@ http://localhost:5000
 
 ### Mobile Responsive Design
 <div style="display: flex; gap: 20px; justify-content: center;">
-  <img src="./docs/images/ui-showcase-1.png" alt="Mobile View" width="600" height="595">
+  <img src="./docs/images/ui-showcase-1.png" alt="Mobile View" width="300" height="595">
   <img src="./docs/images/ui-showcase-2.png" alt="Mobile View" width="300" height="595">
 </div>
 *Mobile Responsive Interface*
