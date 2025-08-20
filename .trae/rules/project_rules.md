@@ -1,3 +1,0 @@
-- I want all modifications to the design or code in English.
-- I want all modifications to the design in the FLOWBITE library.
-- I want a summary of any procedure we perform that is recorded in the documents in the path \documentation

@@ -1,16 +1,16 @@
-# FixFlow - Smart Phone Repair Shop Management System
-
 <div align="center">
-
-![FixFlow Logo](./docs/images/logo.png)
-
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.7+-blue.svg)](https://python.org)
-[![Flask](https://img.shields.io/badge/flask-2.0+-green.svg)](https://flask.palletsprojects.com)
-[![Tailwind CSS](https://img.shields.io/badge/tailwind-3.4+-blue.svg)](https://tailwindcss.com)
-
-**⚠️ IMPORTANT NOTICE: This project is currently under development and not yet complete**
-
+  <img src="./docs/images/logo.png" alt="FixFlow Logo" width="200">
+  <h1>FixFlow</h1>
+  <p><em>Smart Phone Repair Shop Management System</em></p>
+  
+  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+  [![Python](https://img.shields.io/badge/python-3.7+-blue.svg)](https://python.org)
+  [![Flask](https://img.shields.io/badge/flask-2.0+-green.svg)](https://flask.palletsprojects.com)
+  [![Tailwind CSS](https://img.shields.io/badge/tailwind-3.4+-blue.svg)](https://tailwindcss.com)
+  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/yourusername/fixflow/pulls)
+  [![Stars](https://img.shields.io/github/stars/yourusername/fixflow?style=social)](https://github.com/yourusername/fixflow)
+  
+  <strong>⚠️ IMPORTANT NOTICE: This project is currently under development and not yet complete</strong>
 </div>
 
 ---
