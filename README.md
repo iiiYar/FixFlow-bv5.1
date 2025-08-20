@@ -2,6 +2,7 @@
   <img src="./docs/images/logo.png" alt="FixFlow Logo" width="200">
   <h1>FixFlow</h1>
   <p><em>Smart Phone Repair Shop Management System</em></p>
+  
   <strong>**Version**: v5.1 Beta | **Status**: In Development | **Last Updated**: 2024</strong>
   
   [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
