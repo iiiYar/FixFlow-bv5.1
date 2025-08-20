@@ -3,14 +3,14 @@
   <h1>FixFlow</h1>
   <p><em>Smart Phone Repair Shop Management System</em></p>
   
-  <strong>**Version**: v5.1 Beta | **Status**: In Development | **Last Updated**: 2024</strong>
+  <strong>**Version**: v5.1 Beta | **Status**: In Development | **Last Updated**: 2025-8-20</strong>
   
   [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
   [![Python](https://img.shields.io/badge/python-3.7+-blue.svg)](https://python.org)
   [![Flask](https://img.shields.io/badge/flask-2.0+-green.svg)](https://flask.palletsprojects.com)
   [![Tailwind CSS](https://img.shields.io/badge/tailwind-3.4+-blue.svg)](https://tailwindcss.com)
   [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/yourusername/fixflow/pulls)
-  [![Stars](https://img.shields.io/github/stars/yourusername/fixflow?style=social)]([https://github.com/yourusername/fixflow](https://github.com/iiiYar/FixFlow-bv5.1))
+  [![Stars](https://img.shields.io/github/stars/yourusername/fixflow?style=social)](https://github.com/iiiYar/FixFlow-bv5.1)
   
   <strong>⚠️ IMPORTANT NOTICE: This project is currently under development and not yet complete</strong>
 
