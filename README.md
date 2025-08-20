@@ -11,6 +11,9 @@
   [![Stars](https://img.shields.io/github/stars/yourusername/fixflow?style=social)](https://github.com/yourusername/fixflow)
   
   <strong>⚠️ IMPORTANT NOTICE: This project is currently under development and not yet complete</strong>
+  
+  <h2>**Version**: v5.1 Beta | **Status**: In Development | **Last Updated**: 2024</h2>
+  
 </div>
 
 **Version**: v5.1 Beta | **Status**: In Development | **Last Updated**: 2024
