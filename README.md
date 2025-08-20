@@ -14,10 +14,6 @@
   
   <strong>⚠️ IMPORTANT NOTICE: This project is currently under development and not yet complete</strong>
 
-  <strong>**Version**: v5.1 Beta | **Status**: In Development | **Last Updated**: 2024</strong>
-  
-  <h2>**Version**: v5.1 Beta | **Status**: In Development | **Last Updated**: 2024</h2>
-  
 </div>
 
 **Version**: v5.1 Beta | **Status**: In Development | **Last Updated**: 2024
