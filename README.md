@@ -194,10 +194,6 @@
 
 ---
 
-## 🎨 User Interface
-
-![UI Showcase](./docs/images/ui-showcase-1.png)
-![UI Showcase](./docs/images/ui-showcase-2.png)
 
 ### Design Highlights
 
@@ -478,7 +474,7 @@ http://localhost:5000
   <img src="./docs/images/ui-showcase-1.png" alt="Mobile View" width="300" height="595">
   <img src="./docs/images/ui-showcase-2.png" alt="Mobile View" width="300" height="595">
 </div>
-*Mobile Responsive Interface*
+
 
 ---
 
