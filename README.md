@@ -1,6 +1,7 @@
 <div align="center">
   <img src="./docs/images/logo.png" alt="FixFlow Logo" width="200">
   <h1>FixFlow</h1>
+  **Version**: v5.1 Beta | **Status**: In Development | **Last Updated**: 2024
   <p><em>Smart Phone Repair Shop Management System</em></p>
   
   [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -568,6 +569,6 @@ Special thanks to:
 [![GitHub stars](https://img.shields.io/github/stars/yourusername/fixflow.svg?style=social&label=Star)](https://github.com/yourusername/fixflow)
 [![GitHub forks](https://img.shields.io/github/forks/yourusername/fixflow.svg?style=social&label=Fork)](https://github.com/yourusername/fixflow/fork)
 
-**Version**: v5.1 Beta | **Status**: In Development | **Last Updated**: 2024
+
 
 </div>
