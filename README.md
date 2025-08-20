@@ -12,7 +12,9 @@
   
   <strong>⚠️ IMPORTANT NOTICE: This project is currently under development and not yet complete</strong>
 </div>
+
 **Version**: v5.1 Beta | **Status**: In Development | **Last Updated**: 2024
+
 ---
 
 ## 🎯 Overview
