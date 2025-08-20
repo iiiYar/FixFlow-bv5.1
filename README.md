@@ -474,8 +474,8 @@ http://localhost:5000
 *Device Catalog*
 
 ### Mobile Responsive Design
-![Mobile View](./docs/images/ui-showcase-1.png){: width="300" height="400"}
-![Mobile View](./docs/images/ui-showcase-2.png){: width="300" height="400"}
+<img src="./docs/images/ui-showcase-1.png" alt="Mobile View" width="300" height="400">
+<img src="./docs/images/ui-showcase-2.png" alt="Mobile View" width="300" height="400">
 *Mobile Responsive Interface*
 
 ---
