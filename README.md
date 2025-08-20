@@ -86,7 +86,7 @@
 #### 1. Dashboard (`index.html`)
 **Status**: ✅ Complete (90%)
 
-![Dashboard](./docs/images/dashboard-preview.png))
+![Dashboard](./docs/images/dashboard-preview.png)
 
 - Interactive analytics dashboard
 - Quick statistics overview
