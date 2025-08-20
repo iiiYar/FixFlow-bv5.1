@@ -217,7 +217,6 @@
 
 ## 🚀 Quick Start
 
-![Installation Guide](./docs/images/installation-guide.png)
 
 ### Prerequisites
 
@@ -231,7 +230,7 @@ Git
 
 #### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/fixflow.git
+git clone https://github.com/iiiYar/FixFlow-bv5.1
 cd fixflow
 ```
 
@@ -275,13 +274,11 @@ python run.py
 http://localhost:5000
 ```
 
-![Success Installation](./docs/images/success-installation.png)
 
 ---
 
 ## 📊 Project Status
 
-![Project Progress](./docs/images/project-progress.png)
 
 ### Feature Completion Status
 
@@ -394,7 +391,6 @@ http://localhost:5000
 
 ## 🎯 Development Roadmap
 
-![Roadmap](./docs/images/roadmap.png)
 
 ### 🔥 High Priority
 
@@ -480,7 +476,6 @@ http://localhost:5000
 
 ## 🤝 Contributing
 
-![Contributing Guide](./docs/images/contributing.png)
 
 We welcome contributions from developers of all skill levels! Here's how you can help:
 
@@ -512,7 +507,6 @@ We welcome contributions from developers of all skill levels! Here's how you can
 
 ## 📄 License
 
-![License](./docs/images/license.png)
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
@@ -520,14 +514,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🆘 Support & Contact
 
-![Support](./docs/images/support.png)
 
 ### Getting Help
 
-- **📖 Documentation**: Check our [Wiki](https://github.com/yourusername/fixflow/wiki)
-- **🐛 Issues**: Report bugs on [GitHub Issues](https://github.com/yourusername/fixflow/issues)
-- **💬 Discussions**: Join our [GitHub Discussions](https://github.com/yourusername/fixflow/discussions)
-- **📧 Email**: contact@fixflow.com
+- **🐛 Issues**: Report bugs on [GitHub Issues](https://github.com/iiiYar/FixFlow-bv5.1/issues)
+- **📧 Email**: for6aa@gmail.com
 
 ### Community
 
@@ -539,7 +530,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🎉 Acknowledgments
 
-![Acknowledgments](./docs/images/acknowledgments.png)
 
 Special thanks to:
 
@@ -553,7 +543,6 @@ Special thanks to:
 
 ## 📊 Project Statistics
 
-![Project Stats](./docs/images/project-stats.png)
 
 - **Lines of Code**: 15,000+
 - **Files**: 50+
@@ -567,7 +556,6 @@ Special thanks to:
 
 <div align="center">
 
-![Footer](./docs/images/footer.png)
 
 ### ⚠️ **FINAL NOTICE**
 
